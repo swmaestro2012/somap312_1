@@ -8,9 +8,17 @@
 # Java class files
 *.class
 
+# Python
+*.log
+*.pot
+*.pyc
+
 # generated files
 bin/
 gen/
+
+# generated on Mac
+.DS_Store
 
 # Local configuration file (sdk path, etc)
 local.properties
