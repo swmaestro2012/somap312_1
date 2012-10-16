@@ -5,7 +5,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    #url(r'^$', 'accounts.views.index'),
+    url(r'^$', 'main.views.main_page'),
     url(r'^accounts/', include('accounts.urls')),
+    url(r'^main/', include('main.urls')),
     # Examples:
     # url(r'^$', 'varbr.views.home', name='home'),
     # url(r'^varbr/', include('varbr.foo.urls')),

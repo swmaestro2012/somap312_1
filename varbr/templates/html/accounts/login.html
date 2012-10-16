@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block content %}
+<div data-role="page" id="FirstPage">
+    <div data-role="header">
+        <h1>Login</h1>
+    </div>
+    <div data-role="content">
+        <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+            </table>
+            {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <input type="submit" value="login" data-inline="true" />
+            <input type="hidden" name="next" value="{{ next }}" />
+	    <a href="/accounts/signup/">SignUp</a>	            
+        </form>
+    </div>
+</div>
+{% endblock %}
