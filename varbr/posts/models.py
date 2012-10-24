@@ -1,11 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
+'''
+import uuid
 
+def get_book_coverimg_upload_path(instance, filename):
+    ext = "jpg"
+    print 'abcd'
+    if "." in filename:
+        ext = filename.split(".")[-1]
+    newfilename = str(uuid.uuid1()) + "." + ext
+    newfilepath = 'coverimg/' + newfilename
+
+    return newfilepath
+'''
 class Book(models.Model):
     title = models.CharField(max_length=50)
     creator = models.ForeignKey(User)
     #creator_str = models.CharField(max_length=30)
-    coverimg = models.ImageField(null=True, upload_to='/')
+    coverimg = models.ImageField(null=True, upload_to='coverimg/')
     synopsis = models.CharField(max_length=200, null=True)
     time_created = models.DateTimeField(auto_now_add=True)
     genre = models.IntegerField(default=0)

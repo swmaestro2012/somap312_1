@@ -2,23 +2,6 @@
 {% load url from future %}
 
 {% block content %}
-<div data-role="page" id="FirstPage">
-    <div data-role="header">
-        <h1>여러가지</h1>
-    </div>
-    <div data-role="content">
 	{{ email }} is connected<p>
 	<a href="/accounts/logout/">Logout</a>
-    </div>
-    <div data-role="footer">
-	<div data-role="navbar">
-		<ul>
-		<li><a href="/" data-role="button">I</a></li>
-		<li><a href="#" data-role="button">Love</a></li>
-		<li><a href="#" data-role="button">You</a></li>
-		<li><a href="#" data-role="button">Baby</a></li>
-		</ul>
-	</div>
-    </div>
-</div>
 {% endblock %}
