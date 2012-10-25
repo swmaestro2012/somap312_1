@@ -21,8 +21,8 @@
 </head>
 <body>
 <div data-role="page" id="MainPage">
-	<div data-role="header">
-		<h1></h1>
+	<div data-role="header"data-position="fixed">
+		<h1>{% block header %}{% endblock %}</h1>
 	</div>
 	<div data-role="content">
 		{% block content %}{% endblock %}
@@ -32,10 +32,10 @@
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="/" data-role="button" class="ui-btn-active">a</a>
-				<li><a href="#" data-role="button">Love</a></li>
-			        <li><a href="#" data-role="button">You</a></li>
-	        		<li><a href="#" data-role="button">Baby</a></li>
+				<li><a href="/posts/recommend_list/" data-role="button" class="ui-btn-active" data-prefetch="true">추천리스트</a>
+				<li><a href="#" data-role="button" data-prefetch="true">책갈피</a></li>
+			        <li><a href="#" data-role="button" data-prefetch="true">관심작가</a></li>
+	        		<li><a href="#" data-role="button" data-prefetch="true">내글</a></li>
         		</ul>
         	</div>
 	</div>

@@ -1,0 +1,9 @@
+# Debian Ubuntu 64bit
+sudo apt-get install python-dev
+sudo pip install PIL
+
+
+# Plugin
+jQuery
+jQuery Mobile
+jQurry Form Plugin : http://malsup.com/jquery/form/

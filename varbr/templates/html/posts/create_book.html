@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-	<form id="bookCreateForm" enctype="multipart/form-data" action="/posts/create_book/" method="POST">{% csrf_token %}
+	<form id="bookCreateForm" enctype="multipart/form-data" action="/posts/create_book/" method="POST" data-ajax="false">{% csrf_token %}
 	<table>
 		<tr>
 {{ form.creator }}
@@ -16,16 +16,5 @@
 	</table>
 	<input type="submit" value="만들기"/>
 	</form>
-
-	<script src="http://malsup.github.com/jquery.form.js"></script>
-	<script>
-
-		$(document).ready(function() {
-			$('#bookCreateForm').submit(function() {
-				$(this).ajaxSubmit();
-				return false;
-			});
-		});
-	</script>
 {% endblock %}
 

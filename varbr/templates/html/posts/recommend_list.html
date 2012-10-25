@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block header %}
+추천리스트
+{% endblock %}
+
+{% block content %}
+<ul data-role="listview">
+<li data-role="list-divider">Best</li>
+
+{% for book in book_list %}
+	<li>
+		<img src="{{ book.get_coverimg }}" > {{ book.title }} <p>
+		{{ book.synopsis }}
+	</li>
+{% endfor %}
+
+</ul>
+<a href="/accounts/logout/">Logout</a>
+{% endblock %}

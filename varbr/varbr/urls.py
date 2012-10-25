@@ -1,12 +1,12 @@
 from django.conf.urls import patterns, include, url
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+import settings
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
     #url(r'^$', 'accounts.views.index'),
-    url(r'^$', 'main.views.main_page'),
+    url(r'^$', 'posts.views.recommend_list'),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^posts/', include('posts.urls')),
     url(r'^main/', include('main.urls')),
@@ -20,3 +20,14 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if settings.DEBUG is True:
+    urlpatterns += patterns('',
+        url(r'^static(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.STATIC_ROOT,
+        }),
+
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    )

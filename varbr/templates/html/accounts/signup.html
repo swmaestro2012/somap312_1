@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block header %}
+회원가입
+{% endblock %}
 {% block content %}
         <form method="post" action="/accounts/signup_confirmed/">{% csrf_token %}
             Email {{ form.username }}

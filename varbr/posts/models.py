@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+import varbr.settings
 '''
 import uuid
 
@@ -26,6 +28,12 @@ class Book(models.Model):
 
     class Meta:
         verbose_name_plural = "Books"
+
+    def get_coverimg(self):
+        if self.coverimg == "":
+            return varbr.settings.STATIC_URL + "default_cover.jpeg"
+        else:
+            return varbr.settings.MEDIA_URL + self.coverimg.name
 
 class Branch(models.Model):
     book = models.ForeignKey(Book)
