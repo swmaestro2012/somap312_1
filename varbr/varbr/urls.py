@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     #url(r'^$', 'accounts.views.index'),
-    url(r'^$', 'posts.views.recommend_list'),
+    url(r'^$', 'posts.views.main_page'),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^posts/', include('posts.urls')),
     url(r'^main/', include('main.urls')),

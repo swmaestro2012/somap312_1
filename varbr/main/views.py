@@ -9,4 +9,3 @@ def main_page(request):
     return render_to_response('main/main.html', RequestContext(request, {
             'email': request.user,
         }))
-

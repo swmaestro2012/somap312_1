@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+<li>내 글</li>
+
+{% for book in book_list %}
+	<li>
+		<a href = "/posts/get_bookinfo/{{ book.id }}">
+			<p><img src="{{ book.get_coverimg }}" style="height:80px;"> {{ book.title }} </p>
+			<p>{{ book.get_genre_display }} {{ book.creator.get_nickname }}</p>	
+		</a>
+	</li>
+{% endfor %}
+</ul>
+{% endblock %}

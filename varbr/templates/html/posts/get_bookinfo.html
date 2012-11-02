@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>{{ book_info.title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+	<!-- book information -->
+	<p> {{ book_info.title }} </p>
+	<p> <img src="{{ book_info.get_coverimg }}" /></p>
+	<p> {{ book_info.get_genre_display }} </p>
+	<p> {{ book_info.creator.get_nickname }} </p>
+	<p> {{ book_info.synopsis }} </p>
+	<!-- End -->
+
+	
+	<!-- Index of Book -->
+	{% if book_info.root_branch == 0 %}
+		 <a href = "/posts/write_branch/{{ book_info.id }}/{{ book_info.root_branch }}/">첫회쓰기</a>
+	{% else %}
+		<ul data-role="listview">
+			<li data-role="list-divider">목차</li>
+			{% for branch in branch_list %}
+				<li>
+					<a href = "/posts/read_branch/{{ branch.id }}/">
+						{{ branch.title }}	
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	<!-- End -->
+
+
+{% endblock %}
