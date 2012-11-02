@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from models import Book, Branch
+from models import Book, Branch, BookComment
 
 from django import forms
 from django.forms import ModelForm, Textarea
-
 
 class BookCreationForm(ModelForm):
     class Meta:
@@ -26,4 +25,12 @@ class BranchCreationForm(ModelForm):
             
             'title': forms.TextInput(attrs={'placeholder': '제목'}),
             'contents': forms.Textarea(attrs={'placeholder': '내용'}),
-        }        
+        }
+
+class BookCommentForm(ModelForm):
+    class Meta:
+        model = BookComment
+        fields = ('text',)
+        widgets = {
+            'text' : forms.Textarea(attrs={'placeholder': '댓글을 입력하세요.'})
+        }

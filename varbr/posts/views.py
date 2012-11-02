@@ -23,6 +23,7 @@ def recommend_list(request):
             'book_list': book_list,
         }))
 
+
 # 최신작
 @login_required(login_url='/accounts/login/')
 def show_newlist(request):
@@ -34,6 +35,26 @@ def show_newlist(request):
         }))
 
 
+# 책갈피
+
+
+
+# 심은 책
+@login_required(login_url='/accounts/login/')
+def show_mywork(request):
+    mywork = Book.objects.all().filter(creator=request.user)
+    return render_to_response('posts/show_mywork.html', RequestContext(request, {
+            'book_list': mywork,
+        }))
+
+
+# 붙인가지
+
+
+# 댓글 한 잎
+
+
+# 책심기
 @login_required(login_url='/accounts/login/')
 def create_book(request):
     if request.method == "POST":
@@ -49,6 +70,22 @@ def create_book(request):
         RequestContext(request, { 'form': book_form } ))
 
 
+# 작성중인 가지
+
+
+# 관심작가
+
+
+# 계정 설정
+
+
+# 고객센터
+
+
+####################
+
+
+## About 책
 @login_required(login_url='/accounts/login/')
 def get_bookinfo(request, book_id):
     if request.method == "GET":
@@ -60,15 +97,15 @@ def get_bookinfo(request, book_id):
         }))
 
 
-    
+"""
 @login_required(login_url='/accounts/login/')
-def show_mywork(request):
-    mywork = Book.objects.all().filter(creator=request.user)
-    return render_to_response('posts/show_mywork.html', RequestContext(request, {
-            'book_list': mywork,
-        }))    
+def comment_book(request):
+    if request.method != "POST":
+"""
 
 
+
+## About 가지
 @login_required(login_url='/accounts/login/')
 def write_branch(request, book_info, parent_branch):
 # fields = ('book', 'title', 'author', 'contents', 'parent_branch',)
