@@ -30,7 +30,10 @@ class BranchCreationForm(ModelForm):
 class BookCommentForm(ModelForm):
     class Meta:
         model = BookComment
-        fields = ('text',)
+        fields = ('book', 'writer', 'text',)
         widgets = {
+            'book': forms.HiddenInput(),
+            'writer': forms.HiddenInput(),
+
             'text' : forms.Textarea(attrs={'placeholder': '댓글을 입력하세요.'})
         }

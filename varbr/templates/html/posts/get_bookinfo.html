@@ -32,11 +32,25 @@
 	{% endif %}
 	<!-- End -->
 
+
 	<!-- Commentation of Book -->
-	<form method="post" action="/comment_book/{{ book_info.id }}/">
+	<form method="post" action="/posts/get_bookinfo/{{ book_info.id }}/"> {% csrf_token %}
+		{{ bookcomment_form.book }} {{ bookcomment_form.writer }}
+		{{ bookcomment_form.text }}
 		<input type="submit" value="댓글달기" />
 	</form>
 	<!-- End -->
+
+
+	<!-- View of Comment -->
+	{% for bookcomment in bookcomments %}
+	<p>
+		{{ bookcomment.text}} {{ bookcomment.writer.get_nickname }} 
+		{{ bookcomment.time_created }}
+	</p>
+	{% endfor %}
+	<!-- End -->
+
 
 
 {% endblock %}

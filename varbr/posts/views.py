@@ -1,6 +1,6 @@
 # _*_ coding: utf-8 _*_
-from models import Book, Branch
-from forms import BookCreationForm, BranchCreationForm
+from models import Book, Branch, BookComment
+from forms import BookCreationForm, BranchCreationForm, BookCommentForm
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -85,24 +85,34 @@ def create_book(request):
 ####################
 
 
-## About 책
+## 책 정보
 @login_required(login_url='/accounts/login/')
 def get_bookinfo(request, book_id):
-    if request.method == "GET":
-        book_info = Book.objects.get(id=book_id)
-        branch_list = Branch.objects.filter(book=book_id)
-        return render_to_response("posts/get_bookinfo.html", RequestContext(request, {
-                "book_info": book_info,
-                "branch_list": branch_list,
-        }))
+# fields = ('book', 'writer', 'text',)
+    # TODO: ajax
+    if request.method == "POST":
+        bookcomment_form = BookCommentForm(request.POST)
+        print bookcomment_form.errors
+        if bookcomment_form.is_valid():
+            bookcomment_form.save()
+            return HttpResponseRedirect('/posts/get_bookinfo/' + book_id)
+
+    
+    book_info = Book.objects.get(id=book_id)
+    branch_list = Branch.objects.filter(book=book_id)
+    bookcoment = BookComment.objects.all().filter(book=book_id)
 
 
-"""
-@login_required(login_url='/accounts/login/')
-def comment_book(request):
-    if request.method != "POST":
-"""
+    bookcomment_form = BookCommentForm({'book': book_info,
+                                        'writer' : request.user})
 
+    return render_to_response("posts/get_bookinfo.html", RequestContext(request, {
+            "book_info": book_info,
+            "branch_list": branch_list,
+
+            "bookcomment_form": bookcomment_form,
+            "bookcomments": bookcoment,
+    }))
 
 
 ## About 가지
@@ -129,7 +139,7 @@ def write_branch(request, book_info, parent_branch):
                                       'parent_branch': parent_branch})
     # Will Post parent_branch_id, Book_id
     return render_to_response('posts/write_branch.html', \
-        RequestContext(request, { 'form': branch_form,
+        RequestContext(request, {'form': branch_form,
                                  'book_info': book_info,
                                  'parent_branch': parent_branch } ))
 
