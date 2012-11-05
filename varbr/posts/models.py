@@ -90,7 +90,8 @@ class BookComment(models.Model):
     writer = models.ForeignKey(User)
     #writer_str = models.CharField(max_length=30)
     book = models.ForeignKey(Book)
-
+    class Meta:
+        ordering = ['-id']
 
 class BranchComment(models.Model):
     text = models.TextField()
