@@ -39,7 +39,8 @@
     	<a href="#" class="deploy-nav header-icon"></a>
         <a href="#" class="hide-nav header-icon-active"></a>
     	<h1 class="page-title-small">SWIPE ME TO THE RIGHT</h1>
-        <a href="mailto:mail@domain.com" class="contact-icon header-icon"></a>
+        <a href="#" class="deploy-menu contact-icon header-icon"></a>
+        <a href="#" class="hide-menu contact-icon header-icon"></a>
     </div>
 
     <!--
@@ -137,9 +138,14 @@
 		<a href = "/"><h1 class="sidebar-title">여러가지</h1></a>
     </div>
 
-    <a class="menu-item" href="#">{{ user.get_nickname }}</a>
+    <div class="menu-item profile">
+    	<div class="userinfo">
+	    	<img src="profileImage" id="profileImage">
+	    	<div id="nickname">{{ user.get_nickname }}</div>
+    	</div>
+    </div>
 
-    <p class="sidebar-divider no-top">
+    <p class="sidebar-divider">
     	여러가지
     </p>
     <a class="menu-item menu-icon home" href="/posts/recommend_list/">명예의 전당<em></em></a>
@@ -177,11 +183,32 @@
     </p>
     <a class="menu-item menu-icon speach" href="/posts/show_mywork/">계정설정<em></em></a>
     <a class="menu-item menu-icon last-menu-item mail" id="sub-menu-one" href="mailto:mail@domain.com">고객센터<strong></strong></a>
-        <div class="sub-menu-two">
+        <div class="sub-menu-one">
             <a href="fullfolio.html" class="sub-menu-item">건의사항</a>
             <a href="thumbgall.html" class="sub-menu-item">문의사항</a>
         </div>
     <a class="menu-item menu-icon last-menu-item mail" href="/accounts/logout/">LOG OUT</a>
+    </div>
+</div>
+
+<div class="menubar">
+    <div class="menubar-hide-scroll">
+        <div class="menubar-header">
+            <a href="#"><h1 class="sidebar-title">현재 페이지명</h1></a>
+        </div>
+
+        <!-- <p class="sidebar-divider no-top">
+            현재 페이지명
+        </p> -->
+        
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 1<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 2<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 3<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 4<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 5<em></em></a>
+
+
+
     </div>
 </div>
 

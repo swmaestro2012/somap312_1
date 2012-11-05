@@ -157,7 +157,7 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 }
 
 .sidebar-hide-scroll{
-	width:200px;
+	width:105%;
 	overflow: scroll!important;
 	overflow-x:hidden!important;
 	-webkit-overflow-scroll:touch!important;	
@@ -172,7 +172,7 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 	left:0px;
 	top:0px;
 	bottom:0px;
-	width:180px;
+	width:85.5%;
 }
 
 .sidebar-header{
@@ -186,8 +186,9 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 	background-repeat:no-repeat;
 	background-position:0 8px;
 	font-weight:700;
-	text-align:center;
+	text-align:left;
 	padding-top:12px;
+	padding-left: 30px; /* add by junyoung */
 	color:#FFFFFF;
 	text-shadow:0px 2px 0px rgba(0,0,0,0.4);
 }
@@ -202,7 +203,7 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 	padding-top:10px;
 	padding-bottom:10px;
 	color:#585757;
-	font-size:10px;
+	font-size:14px;
 	text-align:right;
 	padding-right:30px;
 	font-family:'Lato', sans-serif;
@@ -235,7 +236,7 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 
 .menu-item{
 	display:block;
-	font-size:12px;
+	font-size:24px;
 	font-family:'Lato', sans-serif;
 	font-weight:800;
 	color:#f6f6f6;
@@ -249,11 +250,11 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 
 .menu-icon{
 	background-repeat:no-repeat!important;
-	background-position:0 -8px!important;
+	background-position:2px -2px!important;
 }
 
 .sub-menu-item{
-	font-size:10px;
+	font-size:20px;
 	color:#a2a2a2;
 	font-style:italic;
 	font-family:'Open Sans', sans-serif;
@@ -263,7 +264,7 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 	margin-top:10px;
 	background-image:url(../images/nav/arrow.png);
 	background-repeat:no-repeat;
-	background-position:12px 6px;
+	background-position:30px 11px; /* modified by junyoung (12, 6 -> 30, 11) */
 }
 
 .sub-menu-one{display:none;}
@@ -1289,4 +1290,84 @@ label#message_label{
 
 #contactMessage:focus{
 	border-color:#e34e47;
+}
+
+/** Added by junyoung **/
+.profile {
+	padding-left: 20px;
+	padding-bottom: 15px;
+}
+#profileImage {
+	width:50px;
+	height:50px;
+	float:left;
+	margin-right:10px;
+}
+#nickname {
+	height:50px;
+	padding-top: 6px;
+}
+
+
+/* menubar */
+.menubar-hide-scroll{
+	width:105%;
+	overflow: scroll!important;
+	overflow-x:hidden!important;
+	-webkit-overflow-scroll:touch!important;	
+	height:100%;
+}
+
+.menubar{
+	background-image:url(../images/bg/sidebar.png);
+	position: fixed;
+	overflow:hidden;
+	z-index:2000;
+	left:100%;
+	top:0px;
+	bottom:0px;
+	width:85.5%;
+}
+
+.menubar-header{
+	/*background-image:url(../images/bg/header.png);*/
+	background-repeat:repeat-x;
+	height:50px;
+}
+
+.menubar-title{
+	background-image:url(../images/icons/location.png);
+	background-repeat:no-repeat;
+	background-position:0 8px;
+	font-weight:700;
+	text-align:left;
+	padding-top:12px;
+	padding-left: 30px; /* add by junyoung */
+	color:#FFFFFF;
+	text-shadow:0px 2px 0px rgba(0,0,0,0.4);
+}
+
+.no-top{
+	border-top:none!important;
+}
+
+.deploy-menu{
+	/*background-image:url(../images/nav/menu.png);
+	background-repeat:no-repeat;
+	background-position:9px 8px;
+	float:left;
+	margin-top:9px;
+	margin-left:10px;
+	margin-right:-45px;*/
+}
+
+.hide-menu{
+	display:none;
+	/*background-image:url(../images/nav/menu.png);
+	background-repeat:no-repeat;
+	background-position:9px 8px;
+	float:left;
+	margin-top:9px;
+	margin-left:10px;
+	margin-right:-45px;*/
 }

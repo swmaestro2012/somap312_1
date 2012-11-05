@@ -71,15 +71,20 @@ $(document).ready(function(){
 		swipeLeft:function(event, direction, distance, duration, fingerCount) {
 		  $('.content').css('position', 'absolute');
 		  $('.content').animate({
-				marginLeft: "0px",
+				marginLeft: "-85%",
 		  }, 150 );
+		  $('.menubar').animate({
+		  		left: "15%",
+		  }, 150);
 		  $('.deploy-nav').show();
 		  $('.hide-nav').hide();
+		  $('.deploy-menu').hide();
+		  $('.hide-menu').show();
 		},
 		  swipeRight:function(event, direction, distance, duration, fingerCount) {
 		  $('.content').css('position', 'fixed');
 		  $('.content').animate({
-				marginLeft: "180px",
+				marginLeft: "85%",
 		  }, 150 );	
 		  $('.deploy-nav').hide();
 		  $('.hide-nav').show();
@@ -99,7 +104,7 @@ $(document).ready(function(){
 		  swipeRight:function(event, direction, distance, duration, fingerCount) {
 		  $('.content').css('position', 'fixed')
 		  $('.content').animate({
-				marginLeft: "180px",
+				marginLeft: "-85%",
 		  }, 150 );	
 		  $('.deploy-nav').hide();
 		  $('.hide-nav').show();
@@ -112,15 +117,20 @@ $(document).ready(function(){
 		  $('.content').animate({
 				marginLeft: "0px",
 		  }, 150 );
+		  $('.menubar').animate({
+		  		left:"100%",
+		  }, 150);
 		  //$('.sidebar').hide(800);
 		  $('.deploy-nav').show();
-		  $('.hide-nav').hide();	
+		  $('.hide-nav').hide();
+		  $('.deploy-menu').show();
+		  $('.hide-menu').hide();
 	  });
   
 	  $('.deploy-nav').click(function(){
 		  $('.content').css('position', 'fixed')
 		  $('.content').animate({
-				marginLeft: "180px",
+				marginLeft: "85%",
 		  }, 150 );
 		  //$('.sidebar').show();
 		  $('.deploy-nav').hide();
@@ -137,7 +147,21 @@ $(document).ready(function(){
 		  $('.deploy-nav').show();
 		  $('.hide-nav').hide();
 		  return false;
-	  });	
+	  });
+
+	  $('.deploy-menu').click(function(){
+		  $('.content').css('position', 'fixed')
+		  $('.content').animate({
+				marginLeft: "-85%",
+		  }, 150 );
+		  $('.menubar').animate({
+		  	left: "15%",
+		  }, 150);
+		  //$('.sidebar').show();
+		  $('.deploy-menu').hide();
+		  $('.hide-menu').show();
+		  return false;
+	  });
 
 	
 	$('#sub-menu-one').click(function(){$('.sub-menu-one').toggle(200); return false;});
