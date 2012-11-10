@@ -132,6 +132,8 @@
 </div>
 -->
 {% if user.is_authenticated %}
+
+<!-- LEFT BAR -->
 <div class="sidebar">
 	<div class="sidebar-hide-scroll" id="scrollMe">
 	<div class="sidebar-header">
@@ -168,12 +170,12 @@
     <p class="sidebar-divider">
     	서재
     </p>
-    <a class="menu-item menu-icon facebook" target="_blank" href="http://www.facebook.com/enabled.labs" >책 갈피<em></em></a>
-    <a class="menu-item menu-icon last-menu-item twitter" target="_blank" href="/posts/show_mywork/">심은 책<em></em></a>
-    <a class="menu-item menu-icon alert3" href="#">붙인 가지<em></em></a>
+    <a class="menu-item menu-icon facebook" href="/posts/show_bookmarks/">책 갈피<em></em></a>
+    <a class="menu-item menu-icon last-menu-item twitter" href="/posts/show_mywork/">심은 책<em></em></a>
+    <a class="menu-item menu-icon alert3" href="/posts/show_mybranches/">붙인 가지<em></em></a>
     <a class="menu-item menu-icon alert3" href="#">댓글 한 잎<em></em></a>
     <a class="menu-item menu-icon alert3" href="/posts/create_book/">책 심기<em></em></a>
-    <a class="menu-item menu-icon alert3 last-menu-item" href="#">작성중인 가지<em></em></a>
+    <a class="menu-item menu-icon alert3 last-menu-item" href="/posts/working_branch/">작성중인 가지<em></em></a>
     <p class="sidebar-divider">
 
     </p>
@@ -181,7 +183,7 @@
     <p class="sidebar-divider">
 
     </p>
-    <a class="menu-item menu-icon speach" href="/posts/show_mywork/">계정설정<em></em></a>
+    <a class="menu-item menu-icon speach" href="#">계정설정<em></em></a>
     <a class="menu-item menu-icon last-menu-item mail" id="sub-menu-one" href="mailto:mail@domain.com">고객센터<strong></strong></a>
         <div class="sub-menu-one">
             <a href="fullfolio.html" class="sub-menu-item">건의사항</a>
@@ -192,9 +194,28 @@
 </div>
 
 
+<!-- RIGHT BAR -->
+<div class="menubar">
+    <div class="menubar-hide-scroll">
+        <!--
+        <div class="menubar-header">
+            <a href="#"><h1 class="sidebar-title">현재 페이지명</h1></a>
+        </div>
+        -->
+        <!-- <p class="sidebar-divider no-top">
+            현재 페이지명
+        </p> -->
+        {% block right_bar %}{% endblock %}
 
-{% block right_bar %}{% endblock %}
-
+        <!--
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 1<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 2<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 3<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 4<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 5<em></em></a>
+        -->
+    </div>
+</div>
 {% endif %}
 
 {% block jquery_code %}{% endblock %}

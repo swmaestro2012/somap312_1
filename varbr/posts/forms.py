@@ -17,7 +17,7 @@ class BookCreationForm(ModelForm):
 class BranchCreationForm(ModelForm):
     class Meta:
         model = Branch
-        fields = ('book', 'title', 'author', 'contents', 'parent_branch',)
+        fields = ('book', 'title', 'author', 'contents', 'parent_branch', 'is_temporary', )
         widgets = {
             'book': forms.HiddenInput(),
             'author': forms.HiddenInput(),
@@ -25,6 +25,7 @@ class BranchCreationForm(ModelForm):
             
             'title': forms.TextInput(attrs={'placeholder': '제목'}),
             'contents': forms.Textarea(attrs={'placeholder': '내용'}),
+            'is_temporary': forms.CheckboxInput(),
         }
 
 class BookCommentForm(ModelForm):

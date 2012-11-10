@@ -3,30 +3,17 @@
 <h1>가지 쓰기</h1>
 {% endblock %}
 {% block content %}
-	<form action="/posts/write_branch/{{book_info}}/{{parent_branch}}/" method="POST">{% csrf_token %}
+	<form action="/posts/write_branch/{{book_info}}/{{parent_branch}}/{{cur_branch}}/" method="POST">{% csrf_token %}
 		{{ form.book }}
 		{{ form.author }}
-		{{ form.parent_branch }}
-		{{ form.title }}
-		{{ form.contents }}
-	<input type="submit" value="가지쓰기" />
-	</form>
-{% endblock %}
+		{% if parent_branch != '0' %}
+			{{ form.parent_branch }}
+		{% endif %}
+		 
 
-{% block right_bar %}
-<div class="menubar">
-    <div class="menubar-hide-scroll">
-        <div class="menubar-header">
-            <a href="#"><h1 class="sidebar-title">현재 페이지명</h1></a>
-        </div>
-        <!-- <p class="sidebar-divider no-top">
-            현재 페이지명
-        </p> -->
-        <a class="menu-item menu-icon facebook" href="#">Menu Item 1<em></em></a>
-        <a class="menu-item menu-icon facebook" href="#">Menu Item 2<em></em></a>
-        <a class="menu-item menu-icon facebook" href="#">Menu Item 3<em></em></a>
-        <a class="menu-item menu-icon facebook" href="#">Menu Item 4<em></em></a>
-        <a class="menu-item menu-icon facebook" href="#">Menu Item 5<em></em></a>
-    </div>
-</div>
+		<p>{{ form.title }}</p>
+		<p>{{ form.contents }}</p>
+		<p>{{ form.is_temporary }} 임시저장</p>
+		<input type="submit" value="가지쓰기" />
+	</form>
 {% endblock %}

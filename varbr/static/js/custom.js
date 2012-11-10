@@ -28,7 +28,6 @@
 
 $(document).ready(function(){
 
-
 (function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")
 	
 	  var isiPhone = navigator.userAgent.toLowerCase().indexOf("iphone");
@@ -251,19 +250,4 @@ $(document).ready(function(){
 	});	
 	
 	var myPhotoSwipe = $("#gallery a, #gallery2 a").photoSwipe({ enableMouseWheel: false , enableKeyboard: false });
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-

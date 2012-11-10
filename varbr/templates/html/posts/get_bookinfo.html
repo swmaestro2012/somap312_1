@@ -16,20 +16,28 @@
 
 	
 	<!-- Index of Book -->
-	{% if book_info.root_branch == 0 %}
-		 <a href = "/posts/write_branch/{{ book_info.id }}/{{ book_info.root_branch }}/">첫회쓰기</a>
-	{% else %}
-		<ul data-role="listview">
-			<li data-role="list-divider">목차</li>
-			{% for branch in branch_list %}
+	<ul data-role="listview">
+		<li data-role="list-divider">목차</li>
+		{% for branch in branch_list %}
+			{% if branch.is_temporary == 0 %}
 				<li>
 					<a href = "/posts/read_branch/{{ branch.id }}/">
-						{{ branch.title }}	
+						{{ branch.title }} | 좋아요 개수: {{ branch.like_count }}
 					</a>
 				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
+
+				<!-- {% include "posts/like_branch.html" %} -->
+				
+				{% if branch.is_liked %}
+					<a href = "/posts/like_branch/{{ branch.id }}/0/">좋아요 취소</a>
+				{% else %}
+					<a href = "/posts/like_branch/{{ branch.id }}/1/">좋아요</a>
+				{% endif %}
+				
+				<a href = "/posts/comment_branch/{{ branch.id }}/">댓글</a>
+			{% endif %}
+		{% endfor %}
+	</ul>	
 	<!-- End -->
 
 
@@ -50,7 +58,12 @@
 	</p>
 	{% endfor %}
 	<!-- End -->
+{% endblock %}
 
-
-
+{% block right_bar %}
+	{% if book_info.root_branch == null %}
+		<a class="menu-item menu-icon facebook" 
+			href="/posts/write_branch/{{ book_info.id }}/0/0/">첫회쓰기<em></em></a>
+			<!-- book_info.root_branch == 0 -->
+	{% endif %}
 {% endblock %}

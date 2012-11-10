@@ -1,15 +1,22 @@
 from django.conf.urls import include, patterns, url
 
 urlpatterns = patterns('posts.views',
+    # Books
     url(r'^create_book/$', 'create_book'),
-    
     url(r'^recommend_list/$', 'recommend_list'),
     url(r'^show_newlist/$', 'show_newlist'),
-
-
     url(r'^get_bookinfo/(?P<book_id>\d+)/$', 'get_bookinfo'),
     url(r'^show_mywork/$', 'show_mywork'),
-    
-    url(r'^write_branch/(?P<book_info>\d+)/(?P<parent_branch>\d+)/$', 'write_branch'),
-    url(r'^read_branch/(?P<branch_id>\d+)/', 'read_branch'),
+
+    # Branches
+    url(r'^write_branch/(?P<book_info>\d+)/(?P<parent_branch>\d+)/(?P<cur_branch>\d+)/$', 'write_branch'),
+    url(r'^read_branch/(?P<branch_id>\d+)/$', 'read_branch'),
+    url(r'^like_branch/(?P<branch_id>\d+)/(?P<like>\d+)/$', 'like_branch'),
+    url(r'^comment_branch/(?P<branch_id>\d+)/$', 'comment_branch'),
+	url(r'^working_branch/$', 'working_branch'),
+
+    # TODO: Something Added for branch postiont
+    url(r'^save_bookmark/(?P<branch_id>\d+)/$', 'save_bookmark'),
+    url(r'^show_bookmarks/$', 'show_bookmarks'),
+    url(r'^show_mybranches/$', 'show_mybranches'),
 )

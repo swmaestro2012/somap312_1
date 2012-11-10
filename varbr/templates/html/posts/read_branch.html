@@ -4,7 +4,18 @@
 <h1>{{ branch.title }}</h1>
 {% endblock %}
 
-
 {% block content %}
 	{{ branch.contents }}
+{% endblock %}
+
+{% block right_bar %}
+	<a class="menu-item menu-icon facebook" 
+	href="/posts/get_bookinfo/{{ branch.book.id }}/">책 메인<em></em></a>
+
+	<a class="menu-item menu-icon facebook" 
+	href="/posts/save_bookmark/{{ branch.book.id }}/">책갈피 저장<em></em></a>	
+
+	<a class="menu-item menu-icon facebook" 
+	href="/posts/write_branch/{{ branch.book.id }}/{{ branch.id }}/0/">이어쓰기<em></em></a>
+
 {% endblock %}

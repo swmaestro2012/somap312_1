@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if bookmark_list %}
+	<ul>
+	<li>북마크</li>
+	{% for bookmark in bookmark_list %}
+		<li>
+			<a href = "/posts/read_branch/{{ bookmark.branch.id }}">	
+				<p><img src="{{ bookmark.branch.book.get_coverimg }}" style="height:80px;"> {{ bookmark.branch.title }} </p>
+				<p>{{ bookmark.branch.book.get_genre_display }} {{ bookmark.branch.book.creator.get_nickname }}</p>	
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+
+{% elif branch_list %}
+	<ul>
+	<li>작성중인 가지</li>
+	{% for branch in branch_list %}
+		<li>
+			{% if branch.parent_branch %}
+				<a href = "/posts/write_branch/{{ branch.book.id }}/{{ branch.parent_branch.id }}/{{ branch.id }}/">
+			{% else %}
+				<a href = "/posts/write_branch/{{ branch.book.id }}/0/{{ branch.id }}/">
+			{% endif %}
+				<p><img src="{{ branch.book.get_coverimg }}" style="height:80px;"> {{ book.title }} </p>
+				<p>{{ book.get_genre_display }} {{ branch.book.creator.get_nickname }}</p>	
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+
+{% elif branch_list_worked %}
+	<ul>
+	<li>붙인 가지</li>
+	{% for branch in branch_list_worked %}
+		<li>
+			<a href = "/posts/read_branch/{{ branch.id }}">	
+				<p><img src="{{ branch.book.get_coverimg }}" style="height:80px;"> {{ book.title }} </p>
+				<p>{{ book.get_genre_display }} {{ branch.book.creator.get_nickname }}</p>	
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+{% endif %}
+{% endblock %}

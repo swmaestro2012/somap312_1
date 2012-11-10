@@ -1,0 +1,27 @@
+{% if branch.is_liked %}
+	<a id="dislike_branch{{ branch.id }}" href = "/posts/like_branch/{{ branch.id }}/0/">좋아요 취소</a>
+{% else %}
+	<a id="like_branch{{ branch.id }}" href = "/posts/like_branch/{{ branch.id }}/1/">좋아요</a>
+{% endif %}
+
+<script>
+function like_branch() {
+	$("#like_branch{{ branch.id }}").load(
+		"/posts/like_branch/{{ branch.id }}/1/?ajax"
+	);
+	return false;
+}
+
+function dislike_branch() {
+	$("#dislike_branch{{ branch.id }}").load(
+		"/posts/like_branch/{{ branch.id }}/0/?ajax"
+	);
+	return false;
+}
+
+$(document).ready(function() {
+	alert("abcd");
+	$("#dislike_branch{{ branch.id }}").click(dislike_branch);
+	$("#like_branch{{ branch.id }}").click(like_branch);
+});
+</script>
