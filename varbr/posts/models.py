@@ -1,25 +1,22 @@
 # _*_ coding: utf-8 _*_
 from django.db import models
 from django.contrib.auth.models import User
-import varbr.settings
+from varbr import settings
 
 import Image, uuid, os.path
 
+
 def get_bookcoverimg_upload_path(instance, filename):
+    # TODO: Original File must be deleted. Must be used thumbnail file.
     size = 128, 128
-    outfile = str(uuid.uuid1()) + ".thumbnail"
-    
-    try:
-        im = Image.open(filename)
-        im.thumbnail(size)
-        im.save(outfile, "JPEG")
-    except IOError:
-        print "Cannot Create Thumbnail."
+    fname = str(uuid.uuid1()) + '.jpg'
+    outfile = settings.PROJECT_PATH + '/media/coverimg/thumbnail/' + fname
 
-    filepath = 'coverimg/' + outfile
+    im = Image.open(instance.coverimg)
+    im.thumbnail(size)
+    im.save(outfile , "JPEG")
 
-    return filepath
-
+    return 'coverimg/' + fname
 
 class Book(models.Model):
     BOOK_GENRE_CHOICES = (
@@ -62,9 +59,10 @@ class Book(models.Model):
 
     def get_coverimg(self):
         if self.coverimg == "":
-            return varbr.settings.STATIC_URL + "default_cover.jpg"
+            return settings.STATIC_URL + "default_cover.jpg"
         else:
-            return varbr.settings.MEDIA_URL + self.coverimg.name
+            # 9 is length of "coverimg/"
+            return settings.MEDIA_URL + "coverimg/thumbnail/" + self.coverimg.name[9:]
 
 
 class Branch(models.Model):

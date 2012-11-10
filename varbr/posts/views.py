@@ -62,7 +62,6 @@ def show_mybranches(request):
 
 # 댓글 한 잎
 
-
 # 책심기
 @login_required(login_url='/accounts/login/')
 def create_book(request):
@@ -72,7 +71,7 @@ def create_book(request):
         if book_form.is_valid():
             book_form.save()
 
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/')            
 
     book_form = BookCreationForm({ 'creator': request.user })
     
