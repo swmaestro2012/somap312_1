@@ -1,11 +1,15 @@
 {% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/booklist.css"/>
+{% endblock %}
 {% block content %}
 
 {% if bookmark_list %}
-	<ul>
-	<li>북마크</li>
+<header>북마크</header>
+	<ul class="branch-list">
 	{% for bookmark in bookmark_list %}
-		<li>
+		<li class="branch-list-item">
 			<a href = "/posts/read_branch/{{ bookmark.branch.id }}">	
 				<p><img src="{{ bookmark.branch.book.get_coverimg }}" style="height:80px;"> {{ bookmark.branch.title }} </p>
 				<p>{{ bookmark.branch.book.get_genre_display }} {{ bookmark.branch.book.creator.get_nickname }}</p>	
@@ -15,30 +19,39 @@
 	</ul>
 
 {% elif branch_list %}
-	<ul>
-	<li>작성중인 가지</li>
+<header>작성 중인 가지</header>
+	<ul class="branch-list">
 	{% for branch in branch_list %}
-		<li>
+		<li class="branch-list-item">
 			{% if branch.parent_branch %}
 				<a href = "/posts/write_branch/{{ branch.book.id }}/{{ branch.parent_branch.id }}/{{ branch.id }}/">
 			{% else %}
 				<a href = "/posts/write_branch/{{ branch.book.id }}/0/{{ branch.id }}/">
 			{% endif %}
-				<p><img src="{{ branch.book.get_coverimg }}" style="height:80px;"> {{ book.title }} </p>
-				<p>{{ book.get_genre_display }} {{ branch.book.creator.get_nickname }}</p>	
+				<img src="{{ branch.book.get_coverimg }}" class="cover-img"> {{ book.title }}</a>
+				<div class="branch-info">
+					<a href="/posts/write_branch/{{ branch.book.id }}/{{ branch.parent_branch.id }}/{{ branch.id }}" class="branch-title">{{ branch.title }}</a>
+					<a href="/posts/get_bookinfo/{{ branch.book.id }}">책 {{ branch.book.title }} by {{ branch.book.creator.get_nickname }}</a>
+				</div>
 			</a>
 		</li>
 	{% endfor %}
 	</ul>
 
 {% elif branch_list_worked %}
-	<ul>
-	<li>붙인 가지</li>
+<header>붙인 가지</header>
+	<ul class="branch-list">
 	{% for branch in branch_list_worked %}
-		<li>
+		<li class="branch-list-item">
 			<a href = "/posts/read_branch/{{ branch.id }}">	
-				<p><img src="{{ branch.book.get_coverimg }}" style="height:80px;"> {{ book.title }} </p>
-				<p>{{ book.get_genre_display }} {{ branch.book.creator.get_nickname }}</p>	
+				<img src="{{ branch.book.get_coverimg }}" class="cover-img"></a>
+				<div class="branch-info">
+					<a href="/posts/read_branch/{{ branch.id }}" class="branch-title">{{ branch.title }}</a>
+					<a href="/posts/get_bookinfo/{{ branch.book.id }}">책 {{ branch.book.title }} by {{ branch.book.creator.get_nickname }}</a>
+					<a href="#">좋아요 ({{branch.like_count}})</a>
+					<a href="#">댓글 ({{branch.comment_count}})</a>
+				</div>
+					
 			</a>
 		</li>
 	{% endfor %}

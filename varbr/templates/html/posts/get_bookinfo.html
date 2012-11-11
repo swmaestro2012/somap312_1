@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block custom_header %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/get_bookinfo.css"/>
+{% endblock %}
 {% block header %}
 <h1>{{ book_info.title }}</h1>
 {% endblock %}
@@ -7,56 +9,81 @@
 
 {% block content %}
 	<!-- book information -->
-	<p> {{ book_info.title }} </p>
-	<p> <img src="{{ book_info.get_coverimg }}" /></p>
-	<p> {{ book_info.get_genre_display }} </p>
-	<p> {{ book_info.creator.get_nickname }} </p>
-	<p> {{ book_info.synopsis }} </p>
+	<div id="book-info-container">
+		<img id="book-cover" src="{{ book_info.get_coverimg }}" />
+		<div id="book-info">
+			<p id="book-title"> {{ book_info.title }} </p>
+			<a href="#" class="cmt-nickname"> {{ book_info.creator.get_nickname }} </a>
+			<p> {{ book_info.get_genre_display }} </p>
+			<p> {{ book_info.synopsis }} </p>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<button id="toggle-book-info">책 정보 접기</button>
 	<!-- End -->
 
 	
+	
+	<div class="divider"></div>
 	<!-- Index of Book -->
-	<ul data-role="listview">
-		<li data-role="list-divider">목차</li>
-		{% for branch in branch_list %}
-			{% if branch.is_temporary == 0 %}
-				<li>
-					<a href = "/posts/read_branch/{{ branch.id }}/">
-						{{ branch.title }} | 좋아요 개수: {{ branch.like_count }}
-					</a>
-				</li>
-
-				<!-- {% include "posts/like_branch.html" %} -->
-				
-				{% if branch.is_liked %}
-					<a href = "/posts/like_branch/{{ branch.id }}/0/">좋아요 취소</a>
-				{% else %}
-					<a href = "/posts/like_branch/{{ branch.id }}/1/">좋아요</a>
+	<div id="book-indexes">
+		<header>목차</header>
+		<ul data-role="listview">
+			{% for branch in branch_list %}
+				{% if branch.is_temporary == 0 %}
+					<li>
+						<a href = "/posts/read_branch/{{ branch.id }}/" class="branch-title">
+							{{ branch.title }}
+						</a>
+						<p>
+						{% if branch.is_liked %}
+							<a href = "/posts/like_branch/{{ branch.id }}/0/">좋아요 취소 ({{ branch.like_count }})</a>
+						{% else %}
+							<a href = "/posts/like_branch/{{ branch.id }}/1/">좋아요 ({{ branch.like_count }})</a>
+						{% endif %}
+						<a href = "/posts/comment_branch/{{ branch.id }}/"> 댓글</a>
+						</p>
+					</li>
+	
+					<!-- {% include "posts/like_branch.html" %} -->
+					
+					
+					
+					
 				{% endif %}
-				
-				<a href = "/posts/comment_branch/{{ branch.id }}/">댓글</a>
-			{% endif %}
-		{% endfor %}
-	</ul>	
+			{% endfor %}
+		</ul>
+	</div>
 	<!-- End -->
-
+	
+	<div class="divider"></div>
 
 	<!-- Commentation of Book -->
-	<form method="post" action="/posts/get_bookinfo/{{ book_info.id }}/"> {% csrf_token %}
-		{{ bookcomment_form.book }} {{ bookcomment_form.writer }}
-		{{ bookcomment_form.text }}
-		<input type="submit" value="댓글달기" />
-	</form>
+	<div id="cmt-post-form">
+		<form method="post" action="/posts/get_bookinfo/{{ book_info.id }}/"> {% csrf_token %}
+			{{ bookcomment_form.book }} {{ bookcomment_form.writer }}
+			{{ bookcomment_form.text }}
+			<input type="submit" id="cmt-submit" value="댓글달기" />
+		</form>
+	</div>
 	<!-- End -->
 
 
 	<!-- View of Comment -->
+	<ul id="comments">
 	{% for bookcomment in bookcomments %}
-	<p>
-		{{ bookcomment.text}} {{ bookcomment.writer.get_nickname }} 
-		{{ bookcomment.time_created }}
-	</p>
+	<li>
+		<img src="" class="small-profile">
+		<div id="cmt-container">
+		
+			<a href="#" class="cmt-nickname">{{ bookcomment.writer.get_nickname }}</a>
+			<p>{{ bookcomment.text}}</p>  
+			<p class="right-align">{{ bookcomment.time_created }}</p>
+		</div>
+	</li>
+	
 	{% endfor %}
+	</ul>
 	<!-- End -->
 {% endblock %}
 
@@ -66,4 +93,16 @@
 			href="/posts/write_branch/{{ book_info.id }}/0/0/">첫회쓰기<em></em></a>
 			<!-- book_info.root_branch == 0 -->
 	{% endif %}
+{% endblock %}
+
+{% block jquery_code %}
+$('#toggle-book-info').bind('click', function() {
+	var text = $(this).text();
+	if(text == "책 정보 접기"){
+		$(this).text("책 정보 펼치기");
+	} else {
+		$(this).text("책 정보 접기");
+	}
+	$('#book-info-container').slideToggle();
+});
 {% endblock %}

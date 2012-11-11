@@ -139,7 +139,7 @@ h4{	font-size:12px; padding-bottom:5px; font-family:'Lato', sans-serif; color:#4
 .content{
 	position:absolute;
 	width:100%;
-	height:100%;
+	min-height: 100%;
 	display:block;
 	z-index:999;
 	left:0px;
@@ -1371,4 +1371,74 @@ label#message_label{
 	margin-top:9px;
 	margin-left:10px;
 	margin-right:-45px;*/
+}
+
+.content header {
+	width:100%;
+	margin-top : 0;
+	padding:5px 0px 5px 0px;
+	text-align: center;
+	font-size: 13pt;
+	font-weight: bold;
+	color: white;
+	background-color : rgba(0,0,0,0.4);
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+.button {
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	*display: inline;
+	vertical-align: baseline;
+	margin: 0 2px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font-size: 13pt;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+.button:hover {
+	text-decoration: none;
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}
+.white-btn {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+	background: -moz-linear-gradient(top,  #fff,  #ededed);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+.white-btn:hover {
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+	background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+.white-btn:active {
+	color: #999;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+	background: -moz-linear-gradient(top,  #ededed,  #fff);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+
+.text {
+	
+}
+
+::selection
+{
+color:inherit;
+background-color:inherit;
 }
