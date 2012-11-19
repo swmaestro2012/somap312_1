@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/get_bookinfo.css"/>
+
+
+<ul id="comments">
+	{% for bookcomment in bookcomments %}
+	<li>
+		<img src="" class="small-profile">
+		<div id="cmt-container">
+		
+			<a href="#" class="cmt-nickname">{{ bookcomment.writer.get_nickname }}</a>
+			<p>{{ bookcomment.text}}</p>  
+			<p class="right-align">{{ bookcomment.time_created }}</p>
+		</div>
+	</li>
+	
+	{% endfor %}
+</ul>

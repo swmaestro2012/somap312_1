@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<style type="text/css">
+	#form-wrap {
+		margin:0;
+		padding:0;
+		padding-top: 10px;
+	}
+	
+	#cover-img-box {
+		position:relative;
+		width:120px;
+		height: 160px;
+		float:left;
+		
+		border:1px solid #f33;
+		background-image: url({{ STATIC_URL }}images/book/blank_cover.jpg);
+		background-size: 120px 160px;
+		
+		margin-right:10px;
+	}
+	
+	#fake-browse {
+		position:absolute;
+		bottom: 0px;
+		margin: 0;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		width: 100%;
+		text-align:center;
+		background-color: rgba(255, 255, 255, 0.75);
+		cursor:pointer;
+	}
+	
+	#id_coverimg {
+		position:relative;
+		width:0px;
+		height:0px;
+		margin:0;
+		padding:0;
+	}
+	
+	#id_title{
+	    font-family: 'Open Sans', sans-serif;
+	    color:#aeaeae;
+	    width:40%;
+	    background-color:#FFFFFF;
+	    border:solid 1px #cccccb;
+	    webkit-border-radius: 4px;
+	    border-radius: 4px;
+	    padding:10px;
+	    -webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    margin-bottom:20px;
+	}
+	
+	#id_genre{
+	    font-family: 'Open Sans', sans-serif;
+	    color:#aeaeae;
+	    width:40%;
+	    background-color:#FFFFFF;
+	    border:solid 1px #cccccb;
+	    webkit-border-radius: 4px;
+	    border-radius: 4px;
+	    padding:10px;
+	    -webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    margin-bottom:20px;
+	}
+	
+	#title-genre{
+		height: 162px;
+	}
+	
+	#id_synopsis {
+		margin-top:10px;
+		width:97%;
+		height:250px;
+		padding-left:10px;
+		padding-top: 10px;
+		
+		border:solid 1px #cccccb;
+	    webkit-border-radius: 4px;
+	    border-radius: 4px;
+	    -webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	}
+	
+	.submit{
+	    font-family: 'Open Sans', sans-serif;
+	    background-color:#fff;
+	    color:#aeaeae;
+	    border:solid 1px #cccccb;
+	    webkit-border-radius: 4px;
+	    border-radius: 4px;
+	    -webkit-box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	
+		padding-left:50px;
+		padding-right:50px;
+	    height: 35px;
+	
+	    cursor: pointer;
+	}
+</style>
+
+{% endblock %}
+
+{% block content %}
+ <div class="container">
+ 	<div id="form-wrap">
+		<form id="bookCreateForm" enctype="multipart/form-data" action="/posts/create_book/" method="POST" data-ajax="false">{% csrf_token %}
+		{{ form.creator }}
+		<div id="cover-img-box">
+			{{ form.coverimg }}
+	 		<div id="fake-browse">
+	 			<span>이미지 변경</span>
+	 		</div>
+	 	</div>
+	 	
+	 	<div id="title-genre">
+			{{ form.title }}
+			{{ form.genre }}
+		</div>
+		{{ form.synopsis }}
+			
+		<input type="submit" class="submit" value="만들기" />
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block jquery_code %}
+//<script>
+$("#fake-browse").bind('click', function(){
+	$("#id_coverimg").click();
+});
+
+$("#id_coverimg").change(function(){
+	var path = $("#id_coverimg").attr('value');
+	//alert(path);
+	//alert("file://" + path.substring(3).replace('\\', '/'));
+	path = "file://" + path.substring(3).replace('\\', '/');
+	$("#cover-img-box").css('background-image', 'url(' + path + ')');
+});
+//</script>
+{% endblock %}

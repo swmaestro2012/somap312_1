@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block custom_header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/posts/read_branch.css"/>
+{% endblock %}
+{% block header %}
+<h1>{{ branch.title }}</h1>
+{% endblock %}
+
+{% block content %}
+<!-- 가지 내용 터치(클릭) 시 나오는 풀다운 메뉴 
+레이아웃 다듬어서 책, 브랜치 정보 표시
+-->
+<div id="branch-info-box">
+가지 제목 : {{ branch.title }}<br/>
+책 제목 : <a href="http://localhost:8000/posts/get_bookinfo/{{branch.book.id}}/">{{ branch.book.title }}</a><br/>
+좋아요({{ branch.like_count }})<br/>
+{% if branch.parent_branch %}
+<a href="/posts/read_branch/{{branch.parent_branch.id}}">이전 가지({{branch.parent_branch.title}})</a><br/>
+{% else %}
+책의 첫 가지입니다<br/>
+{% endif %}
+작성자 : {{ branch.author.nickname }}<br/>
+작성시간 : {{branch.time_created }}<br/>
+댓글 수 : {{ branch.comment_count }}<br/>
+</div>
+<div class="content-page">
+
+	
+	</div>
+{% endblock %}
+
+{% block right_bar %}
+	<a class="menu-item menu-icon facebook" 
+	href="/posts/get_bookinfo/{{ branch.book.id }}/">책 메인<em></em></a>
+
+	<a class="menu-item menu-icon facebook" 
+	href="/posts/save_bookmark/{{ branch.book.id }}/">책갈피 저장<em></em></a>	
+
+	<a class="menu-item menu-icon facebook" 
+	href="/posts/write_branch/{{ branch.book.id }}/{{ branch.id }}/0/">이어쓰기<em></em></a>
+
+{% endblock %}
+
+{% block jquery_code %}
+$(".content-page").bind('click', function(){
+	$("#branch-info-box").slideToggle(100);
+});
+var temp = "{{ branch.contents }}";
+temp = $("<div/>").html(temp).text();
+$(".content-page").html(temp);
+{% endblock %}

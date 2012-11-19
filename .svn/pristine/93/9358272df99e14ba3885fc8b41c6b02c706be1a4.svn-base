@@ -1,0 +1,57 @@
+# _*_ coding: utf-8 _*_
+
+from django.contrib.auth.models import User
+from django.db import models
+from varbr import settings
+
+import uuid, Image
+
+def get_profileimg_upload_path(instance, filename):
+    # TODO: Original File must be deleted. Must be used thumbnail file.
+    size = 128, 128
+    fname = str(uuid.uuid1()) + '.jpg'
+    outfile = settings.PROJECT_PATH + '/media/profileimg/thumbnail/' + fname
+
+    im = Image.open(instance.profileimg)
+    im.thumbnail(size)
+    im.save(outfile , "JPEG")
+
+    return 'profileimg/' + fname
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    profileimg = models.ImageField(blank=True, null=True, upload_to=get_profileimg_upload_path)
+    points = models.IntegerField(default=0, blank=True)
+    message = models.CharField(max_length=140, blank=True, null=True)
+    
+    class Meta:
+        pass
+
+    def get_profileimg(self):
+        if self.profileimg == "":
+            return settings.STATIC_URL + "default_profile.jpg"
+        else:
+            # 9 is length of "coverimg/"
+            #return settings.MEDIA_URL + self.profileimg.name
+            return settings.MEDIA_URL + "profileimg/thumbnail/" + self.profileimg.name[11:]
+            
+
+class UserComment(models.Model):
+    text = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, related_name='user_user')
+    #writer_str = models.CharField(max_length=30)
+    writer = models.ForeignKey(User, related_name='user_writer')
+
+    class Meta:
+        ordering = ['-id']
+
+
+class FavoriteUser(models.Model):
+    user = models.ForeignKey(User, related_name='favoriteuser_user')
+    user_str = models.CharField(max_length=30, blank=True)
+    follower = models.ForeignKey(User, related_name='favoriteuser_follower')
+    follower_str = models.CharField(max_length=30, blank=True)
+
+    class Meta:
+        unique_together = ("user", "follower")

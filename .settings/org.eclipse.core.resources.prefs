@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//accounts/models.py=utf-8
+encoding//accounts/views.py=utf-8
+encoding//posts/forms.py=utf-8
+encoding//posts/models.py=utf-8
+encoding//posts/views.py=utf-8
+encoding//templates/html/accounts/login.html=UTF-8
+encoding//templates/html/accounts/signup.html=UTF-8
+encoding//templates/html/accounts/userinfo.html=UTF-8
+encoding//templates/html/base.html=UTF-8
+encoding//templates/html/posts/create_book.html=UTF-8
+encoding//templates/html/posts/get_bookinfo.html=UTF-8
+encoding//templates/html/posts/get_branchinfo.html=UTF-8
+encoding//templates/html/posts/like_branch.html=UTF-8
+encoding//templates/html/posts/read_branch.html=UTF-8
+encoding//templates/html/posts/write_branch.html=UTF-8
+encoding/<project>=UTF-8

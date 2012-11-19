@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.branch-write-form{
+	margin:10px 10px 10px 10px;
+	text-align:center;
+}
+#id_title {
+	width:95%;
+	font-size: 14pt;
+	border: 1px solid #a1a1a1;
+	padding:5px 0px 5px 0px;
+	box-shadow:3px 3px 5px rgba(0, 0, 0 ,0.5);
+	border-radius:5px;
+	margin-bottom:10px;
+}
+
+#id_contents {
+	display : none;
+}
+
+#id_fake_contents {
+	width:95%;
+	height:350px;
+	font-size: 13pt;
+	border: 1px solid #a1a1a1;
+	box-shadow:3px 3px 5px rgba(0, 0, 0 ,0.5);
+	border-radius:5px;
+	margin-bottom:10px;	
+}
+
+#id_is_temporary{
+	
+}
+
+#branch-submit {
+	display:inline;
+	width:70%;
+	height:30px;
+}

@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+from models import UserComment, UserProfile
+
+from django import forms
+from django.forms import ModelForm, Textarea
+
+class UserCommentForm(ModelForm):
+    class Meta:
+        model = UserComment
+        fields = ('user', 'writer', 'text',)
+        widgets = {
+            'user': forms.HiddenInput(),
+            'writer': forms.HiddenInput(),
+
+            'text' : forms.Textarea(attrs={'placeholder': '댓글을 입력하세요.'})
+        }

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block custom_header %}
+
+{% endblock %}
+
+{% block content %}
+{% for fav_author in fav_authors %}
+	<ul>
+		<a href="/accounts/userinfo/{{ fav_author.id }}">
+			<img src="{{ fav_author.user.get_profile.get_profileimg }}">
+			{{ fav_author.user_str }}
+		</a>
+	</ul>
+{% endfor %}
+
+{% endblock %}

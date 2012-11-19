@@ -1,0 +1,9 @@
+    <form method="post" action="/accounts/signup_confirmed/">{% csrf_token %}
+		<p>{{ form.username }}</p>
+		<p>{{ form.password1 }}</p>
+		<p>{{ form.password2 }}</p>
+		<p>{{ form.nickname }}</p>
+		<p>{{ form.mobile_no }}</p>
+		<p>{{ form.errors }}</p>
+        <input type="submit" value="SignUp" />	
+    </form>

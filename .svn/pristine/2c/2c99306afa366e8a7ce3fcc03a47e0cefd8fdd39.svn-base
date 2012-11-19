@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/posts/booklist.css" />
+{% endblock %}
+
+{% block content %}
+	<header>BEST Contents</header>
+
+
+	<ul class="book-list">
+		<div id="book-list-wrapper">
+			{% include "posts/books.html" %}	
+		</div>
+
+		<a id="a_more_books">더 보기</a> 
+
+	</ul>
+{% endblock %}
+
+
+{% block jquery_code %}
+</script><script>
+$("#a_more_books").click(function() {
+	var book_lastid = $("#book_lastid").val()
+	
+	if(book_lastid == 0) {
+		$("#a_more_books").remove();
+		return;
+	}
+	
+	$("#book_lastid").remove()
+	$.get("/posts/subrecommend_list/" + book_lastid, function(data) {
+		$('#book-list-wrapper').append(data)
+	})
+
+})
+</script><script>
+{% endblock %}

@@ -1,0 +1,84 @@
+<html>
+<head>
+	<style type="text/css">
+	<!-- stylesheet
+		body {
+			margin:0;
+			padding:0;	
+		}
+	-->
+	</style>
+</head>
+<body>
+제목 : {{ branch.title }}
+작성자 : {{branch.author }}
+작성자 커버이미지 : <img src="{{ branch.author.get_profile.get_profileimg }}">
+작성된 시간 : {{ branch.time_created }}
+좋아요 개수 : {{ branch.like_count }}
+댓글 수 : {{ branch.comment_count }}
+
+<p>
+<div id="like-wrapper">
+{% if branch.is_liked %}
+	<a class="like-branch" branch-id="{{ branch.id }}" mode="dislike" href="#">좋아요 취소 ({{ branch.like_count }})</a>
+{% else %}
+	<a class="like-branch" branch-id="{{ branch.id }}" mode="like" href="#">좋아요 ({{ branch.like_count }})</a>
+{% endif %}
+</div>
+</p>
+
+
+<form id="branch-comment-form" method="POST" action="."> {% csrf_token %}
+	{{ branchcomment_form.branch }} {{ branchcomment_form.writer }}
+	{{ branchcomment_form.text }}
+	<input type="submit" id="cmt-submit" value="댓글달기" />
+</form>
+
+
+<!-- View of Comment -->
+<div id="comment-wrapper">
+	{% include "posts/show_comments.html" %}
+</div>
+<!-- End -->
+
+
+
+
+<script type="text/javascript">
+$("#branch-comment-form").submit( function() {
+	$.post('/posts/get_branchinfo/{{ branch.id }}/', {
+		csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+		branch: $('#id_branch').val(),
+		writer: $('#id_writer').val(),
+		text: $('#id_text').val()
+	}, function(data) {
+		$.get('/posts/show_branchcomment/{{ branch.id }}/', function(data) {
+			$('#id_text').val('').focus();
+			$('#comment-wrapper').html(data)
+		})
+	})	
+	return false;
+});
+
+$(".like-branch").click( function() {
+	var $this = $(this)
+	var branch_id = $(this).attr('branch-id')
+	//var like_num = $(this).attr('like-num')
+	if($this.attr('mode') == 'like') {
+		//$this.attr('like-num', like_num)
+		$.get('/posts/like_branch/' + branch_id + '/1/', function(like_cnt) {
+			$this.html('좋아요 취소 (' + like_cnt + ')')
+			$this.attr('mode', 'dislike')
+		})
+	}
+	if($this.attr('mode') == 'dislike') {
+		$.get('/posts/like_branch/' + branch_id + '/0/', function(like_cnt) {
+			$this.html('좋아요 (' + like_cnt + ')')
+			$this.attr('mode', 'like')
+		})
+	}
+	return false;
+})
+</script>
+</body>
+</html>

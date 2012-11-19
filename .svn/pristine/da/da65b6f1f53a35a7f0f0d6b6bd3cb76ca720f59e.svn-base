@@ -1,0 +1,28 @@
+from django.conf.urls import include, patterns, url
+
+urlpatterns = patterns('posts.views',
+    # Books
+    url(r'^create_book/$', 'create_book'),
+    url(r'^recommend_list/$', 'recommend_list'),
+    url(r'^show_newlist/$', 'show_newlist'),
+    url(r'^get_bookinfo/(?P<book_id>\d+)/$', 'get_bookinfo'),
+    url(r'(?P<author_id>\d+)/books/$', 'get_author_books'),
+
+    url(r'^show_bookcomment/(?P<book_id>\d+)/$', 'show_bookcomment'),
+
+    # Branches
+    url(r'^get_branchinfo/(?P<branch_id>\d+)/$', 'get_branchinfo'),
+    url(r'^write_branch/(?P<book_info>\d+)/(?P<parent_branch>\d+)/(?P<cur_branch>\d+)/$', 'write_branch'),
+    url(r'^read_branch/(?P<branch_id>\d+)/$', 'read_branch'),
+    url(r'^like_branch/(?P<branch_id>\d+)/(?P<like>\d+)/$', 'like_branch'),
+    url(r'^comment_branch/(?P<branch_id>\d+)/$', 'comment_branch'),
+	url(r'^working_branch/$', 'working_branch'),
+    url(r'(?P<author_id>\d+)/branches/$', 'get_author_branches'),
+    url(r'^show_branchcomment/(?P<branch_id>\d+)/$', 'show_branchcomment'),
+
+    # TODO: Something Added for branch postiont
+    url(r'^save_bookmark/(?P<branch_id>\d+)/$', 'save_bookmark'),
+    url(r'^show_bookmarks/$', 'show_bookmarks'),
+
+
+)

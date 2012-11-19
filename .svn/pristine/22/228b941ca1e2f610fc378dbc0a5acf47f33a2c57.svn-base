@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}img/splash/splash-icon.png"> 
+<link rel="apple-touch-startup-image" href="{{ STATIC_URL }}img/splash/splash-screen.png" media="screen and (max-device-width: 320px)" /> 
+<link rel="apple-touch-startup-image" href="{{ STATIC_URL }}img/splash/splash-screen@2x.png" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" /> 
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-itunes-app" content="app-id=284882215, app-argument=x-sfp:///visit/seal-rocks">
+
+<title>Baller | Mobile Template</title>
+
+<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/buttons.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/photoswipe.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/retina.css" media="only screen and (-webkit-min-device-pixel-ratio: 2)" rel="stylesheet" />
+<link href="{{ STATIC_URL }}css/add2home.css" rel="stylesheet" type="text/css">
+
+
+<script src="{{ STATIC_URL }}js/klass.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.js"></script>
+<script src="{{ STATIC_URL }}js/touchSwipe.js"></script>
+<script src="{{ STATIC_URL }}js/photoswipe.js"></script>
+<script src="{{ STATIC_URL }}js/roundabout.js"></script>
+<script src="{{ STATIC_URL }}js/contact.js"></script>
+<script src="{{ STATIC_URL }}js/retina.js"></script>
+<script src="{{ STATIC_URL }}js/add2home.js"></script>
+<script src="{{ STATIC_URL }}js/custom.js"></script>
+
+{% block custom_header %}{% endblock %}
+</head>
+
+<body onload="touchScroll('scrollMe')">
+
+<div class="content">
+    {% if user.is_authenticated %}
+	<div class="header">
+    	<a href="#" class="deploy-nav header-icon"></a>
+        <a href="#" class="hide-nav header-icon-active"></a>
+    	<h1 class="page-title-small">SWIPE ME TO THE RIGHT</h1>
+        <a href="#" class="deploy-menu contact-icon header-icon"></a>
+        <a href="#" class="hide-menu contact-icon header-icon"></a>
+    </div>
+
+    <!--
+    <div class="header-notification">
+    	<p class="center-text">Swipe the header open the navigation!</p>
+    </div>
+    -->
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+</div>
+<!--
+    <p class="center-text"><img src="{{ STATIC_URL }}img/logo.png" alt="img" width="217" class="replace-2x logo"></p>
+    
+  
+	<ul class="image-slider">
+		<li>
+        	<span><img class="responsive-image" src="{{ STATIC_URL }}img/slider/001.png" alt="img"></span>
+       	</li>
+		<li>
+        	<span><img class="responsive-image" src="{{ STATIC_URL }}img/slider/002.png" alt="img"></span>
+        </li>
+		<li>
+        	<span><img class="responsive-image" src="{{ STATIC_URL }}img/slider/003.png" alt="img"></span>
+        </li>
+		<li>
+        	<span><img class="responsive-image" src="{{ STATIC_URL }}img/slider/004.png" alt="img"></span>
+        </li>
+		<li>
+        	<span><img class="responsive-image" src="{{ STATIC_URL }}img/slider/005.png" alt="img"></span>
+        </li>
+	</ul>
+    
+    <h4 class="center-text slider-heading-one">WE BUILD AMAZINGLY</h4>
+    <h2 class="center-text slider-heading-two">AWESOME MOBILE INTERFACES</h2>
+    
+    <div class="decoration"></div>
+	
+    <p class="center-text slider-heading-three">
+        We're always interedested in giving you the absolute<br/>
+        best experience, design, and content focusing<br/>
+        with a intuitive and clean interface!
+    </p>
+   
+   <div class="decoration"></div>
+   
+   <div class="container">
+		<div class="two-column-one">
+        	<em class="center-text"><img src="{{ STATIC_URL }}img/icons/icon1.png" class="replace-2x" width="70" alt="img"></em>
+            <h4 class="center-text">WE BUILD AMAZINGLY</h4>
+            <p class="center-text">
+                We absolutely love clean and awesome interfaces! It's really hard to make something clean and also attractive!
+            </p>
+        </div>
+        <div class="two-column-two">
+        	<em class="center-text"><img src="{{ STATIC_URL }}img/icons/icon2.png" class="replace-2x" width="70" alt="img"></em>
+            <h4 class="center-text">WE BUILD AMAZINGLY</h4>
+            <p class="center-text">
+                We absolutely love clean and awesome interfaces! It's really hard to make something clean and also attractive!
+            </p>
+        </div>
+        <div class="clear"></div>
+   </div>
+   
+   <div class="decoration"></div>
+   
+   <div class="container">
+		<div class="two-column-one">
+        	<em class="center-text"><img src="{{ STATIC_URL }}img/icons/icon3.png" class="replace-2x" width="70" alt="img"></em>
+            <h4 class="center-text">WE BUILD AMAZINGLY</h4>
+            <p class="center-text">
+                We absolutely love clean and awesome interfaces! It's really hard to make something clean and also attractive!
+            </p>
+        </div>
+        <div class="two-column-two">
+        	<em class="center-text"><img src="{{ STATIC_URL }}img/icons/icon4.png" class="replace-2x" width="70" alt="img"></em>
+            <h4 class="center-text">WE BUILD AMAZINGLY</h4>
+            <p class="center-text">
+                We absolutely love clean and awesome interfaces! It's really hard to make something clean and also attractive!
+            </p>
+        </div>
+        <div class="clear"></div>
+   </div>
+   
+   <div class="decoration"></div>
+   <p class="center-text copyright">Copyright 2012. All rights reserved</p>
+   
+</div>
+-->
+{% if user.is_authenticated %}
+
+<!-- LEFT BAR -->
+<div class="sidebar">
+	<div class="sidebar-hide-scroll" id="scrollMe">
+	<div class="sidebar-header">
+		<a href = "/"><h1 class="sidebar-title">여러가지</h1></a>
+    </div>
+
+    <div class="menu-item profile">
+    	<div class="userinfo">
+	    	<img src="profileImage" id="profileImage">
+	    	<div id="nickname"><a href="/accounts/userinfo/{{ user.get_nickname }}">{{ user.get_nickname }}</a></div>
+    	</div>
+    </div>
+
+    <p class="sidebar-divider">
+    	여러가지
+    </p>
+    <a class="menu-item menu-icon home" href="/posts/recommend_list/">명예의 전당<em></em></a>
+    <a class="menu-item menu-icon alert3" href="/posts/show_newlist/">최신작<em></em></a>
+    <a class="menu-item menu-icon alert3 last-menu-item" href="#">검색<em></em></a>
+    <!--
+    	<div class="sub-menu-one">
+        	<a href="type.html" class="sub-menu-item">Typography Features</a>
+            <a href="feat.html" class="sub-menu-item">jQuery Features</a>
+            <a href="other.html" class="sub-menu-item">Other Features</a>
+        </div>
+    <a class="menu-item menu-icon img" id="sub-menu-two" href="#">GALLERY<strong></strong></a>
+    	<div class="sub-menu-two">
+        	<a href="fullfolio.html" class="sub-menu-item">Full Width Portfolio</a>
+            <a href="thumbgall.html" class="sub-menu-item">Thumbnail Gallery</a>
+        </div>
+	<a class="menu-item menu-icon list-image" href="blog.html">BLOG<em></em></a>
+    <a class="menu-item menu-icon mail last-menu-item" href="contact.html">CONTACT<em></em></a>
+    -->
+    <p class="sidebar-divider">
+    	서재
+    </p>
+    <a class="menu-item menu-icon facebook" href="/posts/show_bookmarks/">책 갈피<em></em></a>
+    <a class="menu-item menu-icon last-menu-item twitter" href="/posts/show_mywork/">심은 책<em></em></a>
+    <a class="menu-item menu-icon alert3" href="/posts/show_mybranches/">붙인 가지<em></em></a>
+    <a class="menu-item menu-icon alert3" href="#">댓글 한 잎<em></em></a>
+    <a class="menu-item menu-icon alert3" href="/posts/create_book/">책 심기<em></em></a>
+    <a class="menu-item menu-icon alert3 last-menu-item" href="/posts/working_branch/">작성중인 가지<em></em></a>
+    <p class="sidebar-divider">
+
+    </p>
+    <a class="menu-item menu-icon phone last-menu-item" href="/accounts/show_favauthor/">관심작가<em></em></a>
+    <p class="sidebar-divider">
+
+    </p>
+    <a class="menu-item menu-icon speach" href="#">계정설정<em></em></a>
+    <a class="menu-item menu-icon last-menu-item mail" id="sub-menu-one" href="mailto:mail@domain.com">고객센터<strong></strong></a>
+        <div class="sub-menu-one">
+            <a href="fullfolio.html" class="sub-menu-item">건의사항</a>
+            <a href="thumbgall.html" class="sub-menu-item">문의사항</a>
+        </div>
+    <a class="menu-item menu-icon last-menu-item mail" href="/accounts/logout/">LOG OUT</a>
+    </div>
+</div>
+
+
+<!-- RIGHT BAR -->
+<div class="menubar">
+    <div class="menubar-hide-scroll">
+        <!--
+        <div class="menubar-header">
+            <a href="#"><h1 class="sidebar-title">현재 페이지명</h1></a>
+        </div>
+        -->
+        <!-- <p class="sidebar-divider no-top">
+            현재 페이지명
+        </p> -->
+        {% block right_bar %}{% endblock %}
+
+        <!--
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 1<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 2<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 3<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 4<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 5<em></em></a>
+        -->
+    </div>
+</div>
+{% endif %}
+
+<script language="javascript">
+{% block jquery_code %}{% endblock %}
+</script>
+</body>
+</html>
+

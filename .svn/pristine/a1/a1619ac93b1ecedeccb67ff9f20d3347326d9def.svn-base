@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/get_bookinfo.css"/>
+
+
+<ul id="comments">
+	{% for comment in comments %}
+	<li>
+		<img src="{{ comment.writer.get_profile.get_profileimg }}" class="small-profile">
+		<div id="cmt-container">
+			<a href="#" class="cmt-nickname">{{ comment.writer.get_nickname }}</a>
+			<p>{{ comment.text}}</p>  
+			<p class="right-align">{{ comment.time_created }}</p>
+		</div>
+	</li>
+	{% endfor %}
+</ul>

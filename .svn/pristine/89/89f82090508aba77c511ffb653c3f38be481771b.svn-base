@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<link rel="apple-touch-icon" sizes="114x114" href="images/splash/splash-icon.png"> 
+<link rel="apple-touch-startup-image" href="images/splash/splash-screen.png" media="screen and (max-device-width: 320px)" /> 
+<link rel="apple-touch-startup-image" href="images/splash/splash-screen@2x.png" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" /> 
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>Baller | Mobile Template</title>
+
+<link href="style/style.css" rel="stylesheet" type="text/css">
+<link href="style/buttons.css" rel="stylesheet" type="text/css">
+<link href="style/photoswipe.css" rel="stylesheet" type="text/css">
+<link href="style/retina.css" media="only screen and (-webkit-min-device-pixel-ratio: 2)" rel="stylesheet" />
+
+<script src="scripts/klass.min.js"></script>
+<script src="scripts/jquery.js"></script>
+<script src="scripts/touchSwipe.js"></script>
+<script src="scripts/photoswipe.js"></script>
+<script src="scripts/roundabout.js"></script>
+<script src="scripts/contact.js"></script>
+<script src="scripts/retina.js"></script>
+<script src="scripts/custom.js"></script>
+
+</head>
+
+<body onload="touchScroll('scrollMe')">
+
+<div class="content">
+	<div class="header">
+    	<a href="#" class="deploy-nav header-icon"></a>
+        <a href="#" class="hide-nav header-icon-active"></a>
+    	<h1 class="page-title-small">OTHER FEATURES!</h1>
+        <a href="mailto:mail@domain.com" class="contact-icon header-icon"></a>
+    </div>
+    <div class="header-notification">
+    	<p class="center-text">This alert dissaperas after 5 seconds!</p>
+    </div>
+ 
+	<p class="center-text"><img src="images/logo.png" alt="img" width="217" class="replace-2x logo"></p>
+
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text text-space">RESPONSIVE IMAGE</h3>
+    	<img class="responsive-image responsive-background" src="images/slider/1.jpg" alt="img">
+    </div>
+    
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text text-space">RESPONSIVE IMAGE WITH CAPTION</h3>
+    	<img class="responsive-image responsive-background" src="images/slider/2.jpg" alt="img">
+        <p class="responsive-image-caption">This is an image caption!</p>
+    </div>
+    
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text text-space">RESPONSIVE TWO COLUMNS</h3>
+        <p class="column-two-one"><img class="responsive-image responsive-background" src="images/slider/3.jpg" alt="img"></p>
+        <p class="column-two-two"><img class="responsive-image responsive-background" src="images/slider/4.jpg" alt="img"></p>
+        <div class="clear"></div>
+    </div>    
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text text-space">RESPONSIVE THREE COLUMNS</h3>
+        <p class="column-three-one"><img class="responsive-image responsive-background" src="images/slider/3.jpg" alt="img"></p>
+        <p class="column-three-two"><img class="responsive-image responsive-background" src="images/slider/2.jpg" alt="img"></p>
+        <p class="column-three-three"><img class="responsive-image responsive-background" src="images/slider/1.jpg" alt="img"></p>   
+        <div class="clear"></div>
+    </div>
+    
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text">CSS3 SELF ENLARGING BUTTONS</h3>
+        <a href="#" class="button grey">Button</a>
+        <a href="#" class="button yellow">Button</a>
+        <a href="#" class="button green">Button</a>
+        <a href="#" class="button black">Button</a>
+        <a href="#" class="button red">Button</a>
+        <a href="#" class="button blue">Button</a>
+        <a href="#" class="button gblue">Button</a>
+        <a href="#" class="button purple">Button</a>
+        <a href="#" class="button grey">And this button is even bigger! Expanding to text!!</a>
+    </div>
+    
+    <div class="container">
+    	<h4 class="left-text">DETECTING WHAT DEVICE YOU ARE ON!</h4>
+        <p class="left-text">
+        	This detects what device you are browsing from, 
+            and shows an AppStore icon specific to what the device is! 
+            You can make it show whatever you wish!
+            You can use whatever color from the availalble buttons!
+        </p>
+        
+        <div class="iphone-detected">
+            <a href="#" class="button blue">
+                <img class="button-icon" src="images/icons/iphone@2x.png" alt="img">
+                <em>Availalbe on the</em>
+                <strong>AppStore</strong>
+            </a>
+            <br/>
+        </div>
+        
+        <div class="ipod-detected">
+            <a href="#" class="button yellow">
+                <img class="button-icon" src="images/icons/ipodn@2x.png" alt="img">
+                <em>Availalbe on the</em>
+                <strong>AppStore</strong>
+            </a>
+        </div>
+        
+        <div class="ipad-detected">
+            <a href="#" class="button black">
+                <img class="button-icon" src="images/icons/ipad@2x.png" alt="img">
+                <em>Availalbe on the</em>
+                <strong>AppStore</strong>
+            </a>
+        </div>
+        
+        <div class="android-detected">
+            <a href="#" class="button green">
+                <img class="button-icon" src="images/icons/android@2x.png" alt="img">
+                <em>Availalbe on</em>
+                <strong>Google Play</strong>
+            </a>
+        </div>
+        
+    </div>
+    
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text text-space">A LOT OF ICONS!</h3>
+        <span class="icon demo android"></span>
+        <span class="icon demo addressbook"></span>
+        <span class="icon demo alert2"></span>
+        <span class="icon demo alert3"></span>
+        <span class="icon demo android"></span>
+        <span class="icon demo arrow-down"></span>
+        <span class="icon demo arrow-left"></span>
+        <span class="icon demo arrow-right"></span>
+        <span class="icon demo arrow-up"></span>
+        <span class="icon demo bberry"></span>
+        <span class="icon demo bluetooth"></span>
+        <span class="icon demo cameras"></span>
+        <span class="icon demo cart"></span>
+        <span class="icon demo chalendar"></span>
+        <span class="icon demo chart"></span>
+        <span class="icon demo clip"></span>
+        <span class="icon demo clocks"></span>
+        <span class="icon demo cloud-down"></span>
+        <span class="icon demo cloud-up"></span>
+        <span class="icon demo cog1"></span>
+        <span class="icon demo cog2"></span>
+        <span class="icon demo columns"></span>
+        <span class="icon demo comment"></span>
+        <span class="icon demo delicious"></span>
+        <span class="icon demo digg"></span>
+        <span class="icon demo documents"></span>
+        <span class="icon demo download"></span>
+        <span class="icon demo dribble"></span>
+        <span class="icon demo dropbox"></span>
+        <span class="icon demo facebook"></span>
+        <span class="icon demo female"></span>
+        <span class="icon demo film-strip"></span>
+        <span class="icon demo fullscreen"></span>
+        <span class="icon demo go-full"></span>
+        <span class="icon demo go-normal"></span>
+        <span class="icon demo graph"></span>
+        <span class="icon demo headset"></span>
+        <span class="icon demo highdef"></span>
+        <span class="icon demo highdef2"></span>
+        <span class="icon demo home"></span>
+        <span class="icon demo href"></span>
+        <span class="icon demo imac"></span>
+        <span class="icon demo img"></span>
+        <span class="icon demo img2"></span>
+        <span class="icon demo ipad"></span>
+        <span class="icon demo iphone"></span>
+        <span class="icon demo ipodc"></span>
+        <span class="icon demo ipodn"></span>
+        <span class="icon demo laptop"></span>
+        <span class="icon demo linux"></span>
+        <span class="icon demo list"></span>
+        <span class="icon demo list-image"></span>
+        <span class="icon demo lists"></span>
+        <span class="icon demo location"></span>
+        <span class="icon demo lowdef"></span>
+        <span class="icon demo lowdef2"></span>
+        <span class="icon demo magnifier"></span>
+        <span class="icon demo mail"></span>
+        <span class="icon demo male"></span>
+        <span class="icon demo mic"></span>
+        <span class="icon demo mobile"></span>
+        <span class="icon demo money"></span>
+        <span class="icon demo mouse"></span>
+        <span class="icon demo myspace"></span>
+        <span class="icon demo osx"></span>
+        <span class="icon demo paypal"></span>
+        <span class="icon demo pdf-doc"></span>
+        <span class="icon demo pdf-docs"></span>
+        <span class="icon demo phone"></span>
+        <span class="icon demo price"></span>
+        <span class="icon demo refresh"></span>
+        <span class="icon demo refresh2"></span>
+        <span class="icon demo settings"></span>
+        <span class="icon demo shuffle"></span>
+        <span class="icon demo sign"></span>
+        <span class="icon demo skype"></span>
+        <span class="icon demo speach"></span>
+        <span class="icon demo speach2"></span>
+        <span class="icon demo stumble"></span>
+        <span class="icon demo tags"></span>
+        <span class="icon demo tumblr"></span>
+        <span class="icon demo twitter"></span>
+        <span class="icon demo upload"></span>
+        <span class="icon demo user"></span>
+        <span class="icon demo users"></span>
+        <span class="icon demo vimeo"></span>
+        <span class="icon demo volume"></span>
+        <span class="icon demo wifi"></span>
+        <span class="icon demo win"></span>
+        <span class="icon demo wp"></span>
+        <span class="icon demo youtube"></span>
+    </div>
+     
+    <div class="decoration"></div>
+    <p class="center-text copyright">Copyright 2012. All rights reserved</p>
+   
+</div>
+
+<div class="sidebar">
+	<div class="sidebar-hide-scroll" id="scrollMe">
+	<div class="sidebar-header">
+		<h1 class="sidebar-title">FEATURES</h1>
+    </div>
+    <p class="sidebar-divider no-top">
+    	NAVIGATION
+    </p>
+    <a class="menu-item menu-icon home" href="index.html">HOMEPAGE <em></em></a>
+    <a class="menu-item menu-icon alert3" id="sub-menu-one" href="#">FEATURES<strong></strong></a>
+    	<div class="sub-menu-one">
+        	<a href="type.html" class="sub-menu-item">Typography Features</a>
+            <a href="feat.html" class="sub-menu-item">jQuery Features</a>
+            <a href="other.html" class="sub-menu-item">Other Features</a>
+        </div>
+    <a class="menu-item menu-icon img" id="sub-menu-two" href="#">GALLERY<strong></strong></a>
+    	<div class="sub-menu-two">
+        	<a href="fullfolio.html" class="sub-menu-item">Full Width Portfolio</a>
+            <a href="thumbgall.html" class="sub-menu-item">Thumbnail Gallery</a>
+        </div>
+	<a class="menu-item menu-icon list-image" href="blog.html">BLOG<em></em></a>
+    <a class="menu-item menu-icon mail last-menu-item" href="contact.html">CONTACT<em></em></a>
+    <p class="sidebar-divider">
+    	GET SOCIAL WITH US
+    </p>
+    <a class="menu-item menu-icon facebook" target="_blank" href="http://www.facebook.com/enabled.labs">FACEBOOK PAGE</a>
+    <a class="menu-item menu-icon last-menu-item twitter" target="_blank" href="https://twitter.com/iEnabled">TWITTER PAGE</a>
+    <p class="sidebar-divider">
+    	GET IN TOUCH WITH US
+    </p>
+    <a class="menu-item menu-icon phone" href="tel:+1234567890">CALL US</a>
+    <a class="menu-item menu-icon speach" href="sms:+1234567890">TEXT US</a>
+    <a class="menu-item menu-icon last-menu-item mail" href="mailto:mail@domain.com">MAIL US</a>
+    <p class="sidebar-divider">
+    	TAP THE CONTENT TO CLOSE
+    </p>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+

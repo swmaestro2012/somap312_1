@@ -1,0 +1,14 @@
+{% for book in book_list %}
+	<li class="book-list-item">
+		<a href = "/posts/get_bookinfo/{{ book.id }}">
+			<img src="{{ book.get_coverimg }}"></a>
+			<div class="book-item-info">
+				<a href="/posts/get_bookinfo/{{ book.id }}" class="book-item-title">{{ book.title }}</a>
+				<a href="#" class="book-item-genre">{{ book.get_genre_display }}</a>
+				유저 레벨 : {{ book.creator.get_profile.points }} <a href="#" class="book-item-nickname">{{ book.creator.get_nickname }}</a>
+				좋아요 개수 : {{ book.like_count }}
+			</div>	
+	</li>
+{% endfor %}
+
+<input type="hidden" id="book_lastid" value="{{ book_lastid }}" />

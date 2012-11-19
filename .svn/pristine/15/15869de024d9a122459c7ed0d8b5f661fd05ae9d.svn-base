@@ -1,0 +1,266 @@
+<html>
+<head>
+	<style type="text/css">
+	<!-- stylesheet
+		html, body {
+			margin:0;
+			padding:0;	
+		}
+		
+		.branch-nav {
+			position:fixed;
+			margin-bottom:0;
+			bottom : -5px;
+			height : 50px;
+			display:table;
+			width:100%;
+			background-image : url(/static/images/bg/header.png);
+			/*border-radius:5px;*/
+			border-bottom-left-radius: 11px;
+			border-bottom-right-radius: 11px;
+			box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.5);
+		}
+		
+		.branch-nav ul{
+			list-style: none;
+			padding:0;
+			display:table-row;
+		}
+		
+		.branch-nav li{
+			text-align:center;
+			vertical-align:middle;
+			display:table-cell;
+			width:50%;
+		}
+		
+		.branch-nav a {
+			text-decoration: none;
+			font-weight:bolder;
+			font-size : 18px;
+			color : white;
+			text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
+		}
+		
+		.icon{
+			padding-left:38px;
+			background-repeat : no-repeat;
+			background-position: 0 50%;
+		}
+		.branch-nav .read-from-first{
+			background-image: url(/static/images/icons/read-from-first.png);
+		}
+		
+		.branch-nav .read-branch {
+			background-image: url(/static/images/icons/read-branch.png);
+		}
+		
+		.branch-nav .write-branch {
+			background-image: url(/static/images/icons/write-branch.png);
+		}
+		
+		.content {
+			position: fixed;
+			top : 0;
+			left : 0;
+			right : 0;
+			bottom: 46px;
+			overflow:hidden;
+		}
+		
+		.hide-scroll{
+			position:absolute;
+			left:0;right:-20px;top:0;bottom:0;
+			overflow-x: hidden;
+			overflow-y : scroll;
+		}
+		
+		.form-box {
+			padding-left:10px;
+		}
+		
+		hr {
+			margin: 10px 5px 10px 5px;
+			text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+		}
+		
+		.estimation {
+			text-align:right;
+			padding-right:15px;
+		}
+		
+		.estimation .comment-box {
+			padding-left: 18px;
+			padding-right: 15px;
+			font-size: 14px;
+		}
+		.estimation a {
+			padding-left: 18px;
+			text-decoration: none;
+			font-size: 14px;
+			
+		}
+		
+		.like-icon {
+			background-image : url(/static/images/icons/like.png);
+		}
+		
+		.comment-icon {
+			background-image : url(/static/images/icons/branch-comment.png);
+		}
+		
+		.branch-title {
+			background-image : url(/static/images/icons/branch-icon.png);
+			background-size : 24px 24px;
+			background-position: 10px 50%; 
+			font-size:18px;
+			font-weight : bold;
+			text-shadow : 1px 1px 2px rgba(0,0,0,0.4);
+		}
+		.clear {
+			clear:both;
+		}
+		
+		#time_created {
+			text-align : right;
+			padding-right : 10px;
+		}
+		
+		.branch-box {
+			padding-left:10px;
+		}
+		
+		.branch-summary {
+			padding-left : 58px;
+		}
+		
+		.branch-contents {
+			height: 58px;
+			overflow : hidden;
+		}
+		
+		.branch-writer-profile {
+			width: 50px;
+			height: 50px;
+			float : left;
+			background-image : url({{ branch.author.get_profile.get_profileimg }});
+			background-size : 50px 50px;
+			background-repeat : no-repeat;
+		}
+		
+		.branch-writer {
+			text-decoration : none;
+			font-size : 20px;
+			font-weight: bolder;
+			color : #337;
+		}
+		
+		.branch-contents {
+			margin-top : 8px;
+		}
+	-->
+	</style>
+	
+	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+</head>
+<body>
+<div class="content">
+<div class="hide-scroll">
+<p class="branch-title icon branch-icon"> {{ branch.title }} </p>
+<hr/>
+<div class="branch-box">
+	<a class="branch-writer-profile" href="/accounts/userinfo/{{ branch.author.id }}/"></a>
+	<div class="branch-summary">
+		<a class="branch-writer" href="/accounts/userinfo/{{ branch.author.id }}/">{{ branch.author.get_nickname }}</a>
+		<div class="branch-contents">{{ branch.contents }}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<p id="time_created">{{ branch.time_created }}</p>
+
+<!-- 평가 (좋아요/댓글) -->
+<div class="estimation">
+	<span class="icon comment-icon comment-box"><span id="comment_count-wrapper">{{ branch.comment_count }}</span>개의 댓글</span>
+	{% include "posts/like_branch.html" %}
+</div>
+
+<hr/>
+
+<div class="form-box">
+	<form id="branch-comment-form" method="POST" action="."> {% csrf_token %}
+		{{ branchcomment_form.branch }} {{ branchcomment_form.writer }}
+		{{ branchcomment_form.text }}
+		<input type="submit" id="cmt-submit" value="댓글달기" />
+	</form>
+</div>
+
+<!-- View of Comment -->
+<div id="comment-wrapper">
+	{% include "posts/show_comments.html" %}
+</div>
+<!-- End -->
+</div>
+</div>
+
+<!-- footer navigation -->
+<footer class="branch-nav">
+<ul>
+	<li>
+		<a href="/posts/write_branch/{{ branch.book.id }}/{{ branch.id }}/0 " target="_top" class="icon write-branch">이어쓰기</a>
+	</li>
+	<!-- 첫회보기 생략
+	<li>
+		<a href="/posts/read_branch/{{ branch.book.root_branch.id }}" target="_top" class="icon read-from-first">첫 회 보기</a>
+	</li> -->
+	
+	<li>
+		<a href="/posts/read_branch/{{ branch.id }}" target="_top" class="icon read-branch">읽기</a>
+	</li>
+</ul>
+</footer>
+<!-- footer navigation end -->
+
+<script type="text/javascript">
+$("#branch-comment-form").submit( function() {
+	$.post('/posts/get_branchinfo/{{ branch.id }}/', {
+		csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+		branch: $('#id_branch').val(),
+		writer: $('#id_writer').val(),
+		text: $('#id_text').val()
+	}, function(cnt) {
+		
+		$.get('/posts/show_branchcomment/{{ branch.id }}/', function(data) {
+			$('#id_text').val('').focus();
+			$('#comment-wrapper').html(data);
+
+			$('#comment_count-wrapper').html(cnt);
+		})
+	})	
+	return false;
+});
+
+$(".like-branch").click( function() {
+	var $this = $(this)
+	var branch_id = $(this).attr('branch-id')
+	//var like_num = $(this).attr('like-num')
+	if($this.attr('mode') == 'like') {
+		//$this.attr('like-num', like_num)
+		$.get('/posts/like_branch/' + branch_id + '/1/', function(like_cnt) {
+			$this.html('좋아요 취소 (' + like_cnt + ')')
+			$this.attr('mode', 'dislike')
+		})
+	}
+	if($this.attr('mode') == 'dislike') {
+		$.get('/posts/like_branch/' + branch_id + '/0/', function(like_cnt) {
+			$this.html('좋아요 (' + like_cnt + ')')
+			$this.attr('mode', 'like')
+		})
+	}
+	return false;
+})
+
+$("a").attr("target", "_top");
+</script>
+</body>
+</html>

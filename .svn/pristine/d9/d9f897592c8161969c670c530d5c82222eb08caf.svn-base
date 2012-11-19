@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/posts/booklist.css" />
+{% endblock %}
+
+{% block content %}
+	<header>BEST Contents</header>
+	<ul class="book-list">
+		<div id="book-list-wrapper">
+			{% include "posts/books.html" %}	
+		</div>
+			{% if is_best %}
+				<a id="a_more_bests">더 보기</a>
+			{% elif is_new %}
+				<a id="a_more_news">더 보기</a>
+			{% elif is_mine %}
+				<a id="a_more_mine">더 보기</a>
+			{% endif %}
+	</ul>
+{% endblock %}
+
+
+{% block jquery_code %}
+</script><script>
+$("#a_more_bests").click(function() {
+	var book_page = $("#book_page").val()
+	var is_lastpage = $("#is_lastpage").val()
+
+	if(is_lastpage == "True") {
+		$("#a_more_bests").remove();
+		return;
+	}
+	
+	$("#book_page").remove()
+	$("#is_lastpage").remove()
+	$.get("/posts/recommend_list/?page=" + book_page, function(data) {
+		$('#book-list-wrapper').append(data)
+	})
+
+	if(book_page == 0) {
+		$("#a_more_bests").remove();
+		return;
+	}
+	return false;
+})
+
+$("#a_more_news").click(function() {
+	var book_page = $("#book_page").val()
+	
+	if(book_page == 0) {
+		$("#a_more_news").remove();
+		return;
+	}
+	
+	$("#book_page").remove()
+	$.get("/posts/show_newlist/?page=" + book_page, function(data) {
+		$('#book-list-wrapper').append(data)
+	})
+	return false;
+})
+
+$("#a_more_mine").click(function() {
+	var book_page = $("#book_page").val()
+	
+	if(book_page == 0) {
+		$("#a_more_mine").remove();
+		return;
+	}
+	
+	$("#book_page").remove()
+	$.get("/posts/{{ user.id }}/books/?page=" + book_page, function(data) {
+		$('#book-list-wrapper').append(data)
+	})
+	return false;
+})
+</script><script>
+{% endblock %}

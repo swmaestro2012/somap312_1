@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block header %}
+<h1>{{ book_info.title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+	<!-- TODO: 자기 자신이 로그인 했으면 수정 기능 부가 한다. -->
+
+	<!-- UserInformation -->
+	<img src="{{ owner.get_profile.get_profileimg }}" />
+	<p>{{ owner.get_nickname }}</p>
+	<p>{{ owner }}</p>
+	{% if owner == user %}
+		aaa
+	<form method="post" action="/accounts/update_profile/">
+
+		<input type="submit" value="프로필 변경" />
+	</form>
+	{% endif %}
+
+	<!-- UserInformation End -->
+
+	<p>
+	{% if is_self == 0 %}
+		{% if is_friend == 0 %}
+			<a href="/accounts/add_favauthor/{{ owner.id }}/1/">관심작가 추가</a>
+		{% else %}
+			<a href="/accounts/add_favauthor/{{ owner.id }}/0/">관심작가 취소</a>
+		{% endif %}
+	{% endif %}
+	</p>
+	<p>
+	{% if numofFollow == 0 %}
+		따르는 사람이 없습니다.
+	{% else %}
+		{{ numofFollow }} 명이 따르고 있습니다.
+	{% endif %}
+	</p>
+	<p><a href="/posts/{{ owner.id }}/books/">집필한 책 ({{ numofBook }})</a></p>
+	<p><a href="/posts/{{ owner.id }}/branches/">참여 가지 ({{ numofBranch}})</a></p>
+	
+
+
+	<!-- User CommentForm -->
+	<form method="post" action="/accounts/userinfo/{{ user.id }}/"> {% csrf_token %}
+			{{ form.user }} {{ form.writer }}
+			{{ form.text }}
+		<input type="submit" id="cmt-submit" value="댓글달기" />
+	</form>
+	<!-- UserComment End -->
+
+
+	<!-- View of Comment -->
+	{% for usercomment in usercomments %}
+	<p>
+		{{ usercomment.writer.get_nickname }}
+		{{ usercomment.text }}
+		{{ usercomment.time_created }}
+	</p>
+	{% endfor %}
+	<!-- End -->
+
+{% endblock %}

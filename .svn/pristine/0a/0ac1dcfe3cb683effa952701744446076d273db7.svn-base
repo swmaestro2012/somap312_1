@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block header %}
+<h1>{{ book_info.title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+	<img src="{{ owner.get_profile.get_profileimg }}" />
+
+	{% if owner == user %}
+		<a id="a_userimg" href="#">이미지 변경</a>
+		<a id="a_userimg_cancel" href="#">취소</a>
+
+		<form id="form_userimg" enctype="multipart/form-data" action="/accounts/update_userprofileimg/" method="POST">{% csrf_token %}
+			{{ umessage_form.user }}
+			{{ umessage_form.profileimg }}
+			<input type="submit" value="확인" />
+		</form>
+	{% endif %}
+
+
+
+	<!-- User Name -->
+	<p>유저 이름 : {{ owner.get_nickname }}</p>
+
+	<p>유저 점수 : {{ owner.get_profile.points }}</p>
+	<!-- User Message -->
+	<div id="user_message_wrapper">
+		{% include "accounts/userinfo_message.html" %}
+	</div>
+
+	{% if owner == user %}
+		<a id="a_usermsg" href ="#">메시지 변경</a>
+		<a id="a_usermsg_cancel" href ="#">취소</a>
+
+		<form id="form_user_message" method="POST" action=".">{% csrf_token %}
+				{{ umessage_form.user }}
+				{{ umessage_form.message }} (140자 제한)
+				<input type="submit" value="확인" />
+		</form>
+	{% endif %}
+
+	
+	
+
+	<p>
+	{% if is_self == 0 %}
+		{% if is_friend == 0 %}
+			<a href="/accounts/add_favauthor/{{ owner.id }}/1/">관심작가 추가</a>
+		{% else %}
+			<a href="/accounts/add_favauthor/{{ owner.id }}/0/">관심작가 취소</a>
+		{% endif %}
+	{% endif %}
+	</p>
+
+	<p>
+	{% if numofFollow == 0 %}
+		따르는 사람이 없습니다.
+	{% else %}
+		{{ numofFollow }} 명이 따르고 있습니다.
+	{% endif %}
+	</p>
+	<p><a href="/posts/{{ owner.id }}/books/">집필한 책 ({{ numofBook }})</a></p>
+	<p><a href="/posts/{{ owner.id }}/branches/">참여 가지 ({{ numofBranch}})</a></p>
+	
+
+
+	<!-- User CommentForm -->
+	<form id="form_user_comment" method="post" action="."> {% csrf_token %}
+			{{ uinfo_form.user }} {{ uinfo_form.writer }}
+			{{ uinfo_form.text }}
+		<input type="submit" id="cmt-submit" value="댓글달기" />
+	</form>
+
+
+	<!-- UserComment End -->
+	<div id="comment-wrapper">
+		{% include "posts/show_comments.html" %}
+	</div>
+	<!-- End -->
+
+{% endblock %}
+
+{% block jquery_code %}
+</script><script>
+	// User Message
+	var msg = "{{ owner.get_profile.message }}";
+	$("#form_user_message").hide();
+	$("#a_usermsg_cancel").hide();
+
+	$("#a_usermsg").click( function() {
+		$("#a_usermsg").hide();
+		$("#a_usermsg_cancel").show();
+		$("#form_user_message").show();
+		$("#id_message").attr("value", msg);
+		$("#id_message").focus();
+	});
+
+	$("#a_usermsg_cancel").click( function() {
+		$("#a_usermsg").show();
+		$("#a_usermsg_cancel").hide();
+		$("#form_user_message").hide();	
+	});
+
+	$("#form_user_message").submit( function() {
+		$.post('/accounts/update_usermessage/', {
+			csrfmiddlewaretoken: $('#form_user_message input[name="csrfmiddlewaretoken"]').val(),
+			user: $('#id_user').val(),
+			message: $('#id_message').val()
+		}, function(data) {
+			$.get('/accounts/update_usermessage/', function(data) {
+				$('#user_message_wrapper').html(data)
+				msg = data;
+				$("#a_usermsg").show();
+				$("#a_usermsg_cancel").hide();
+				$("#form_user_message").hide();
+			})
+		})	
+		return false;
+	});
+
+
+	//UserProfile
+	$("#form_userimg").hide();
+	$("#a_userimg_cancel").hide();
+
+	$("#a_userimg").click( function() {
+		$("#a_userimg").hide();
+		$("#a_userimg_cancel").show();
+		$("#form_userimg").show();
+	});
+	$("#a_userimg_cancel").click( function() {
+		$("#a_userimg").show();
+		$("#a_userimg_cancel").hide();
+		$("#form_userimg").hide();
+	});
+/*
+	//UserProfile ajax Fail.
+	$("#form_userimg").submit( function() {
+		$.post('/accounts/update_userprofileimg/', {
+			csrfmiddlewaretoken: $('#form_userimg input[name="csrfmiddlewaretoken"]').val(),
+			user: $('#id_user').val(),
+			profileimg: $('#id_profileimg').val()
+		}, function(data) {
+			$.get('/accounts/update_userprofileimg/', function(data) {
+				$('#userimg_wrapper').html(data)
+			})
+		})	
+		return false;
+	});
+*/
+
+	//User Comment
+	$("#form_user_comment").submit( function() {
+		$.post('/accounts/userinfo/{{ owner.id }}/', {
+			csrfmiddlewaretoken: $('#form_user_comment input[name="csrfmiddlewaretoken"]').val(),
+			user: $('#id_user').val(),
+			writer: $('#id_writer').val(),
+			text: $('#id_text').val()
+		}, function(data) {
+			$.get('/accounts/show_usercomment/{{ owner.id }}/', function(data) {
+				$('#id_text').val('').focus()
+				$('#comment-wrapper').html(data)
+			})
+		})	
+		return false;
+	});
+</script><script>
+{% endblock %}

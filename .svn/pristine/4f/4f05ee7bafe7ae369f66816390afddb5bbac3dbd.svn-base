@@ -1,0 +1,5 @@
+{% if branch.is_liked %}
+	<a class="like-branch" branch-id="{{ branch.id }}" mode="dislike" href="#">좋아요 취소 ({{ branch.like_count }})</a>
+{% else %}
+	<a class="like-branch" branch-id="{{ branch.id }}" mode="like" href="#">좋아요 ({{ branch.like_count }})</a>
+{% endif %}

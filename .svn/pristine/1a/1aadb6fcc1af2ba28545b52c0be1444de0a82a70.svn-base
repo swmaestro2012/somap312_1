@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% block custom_header %}
+<style type="text/css">
+	#a_userimg {
+		padding-left : 24px;
+		background-image : url({{ STATIC_URL }}images/icons/edit.png);
+		background-size : 20px 20px;
+		background-position : 0 50%;
+		background-repeat: no-repeat;
+		display:inline-block;
+		color : white;
+		text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+		font-weight:bolder;
+	}
+	
+	#id_profileimg {
+		margin:0;padding:0;
+		width:0;
+		height:0;
+		display:hidden;
+	}
+	
+	.profileimg-box {
+		width:120px;
+		overflow  : hidden;
+		float : left;
+		margin-right : 10px;
+		text-align:center;
+	}
+	
+	.profileimg-box img {
+		border-radius:8px;
+		border : 1px solid black;
+		width:120px;
+	}
+	
+	.clear {
+		clear:both;
+	}
+	
+	.hr-like {
+		border-top : 1px solid #aaa;
+		height:0;
+		margin : 30px 5px 10px 5px;
+		
+	}
+	
+	.user-info {
+		margin : 5px;
+		padding: 5px 5px 15px 5px;
+		background-color : #E3E9F3;
+		border : 1px solid #aaa;
+		box-shadow : 2px 2px 6px rgba(0,0,0,0.3);
+	}
+	
+	.user-data {
+		padding-left:130px;
+	}
+	
+	#user_message_wrapper {
+		background-color : white;
+		margin:10px 0 10px 0px;
+		padding:7px;
+		border: 1px solid #999;
+		border-radius:8px;
+		word-wrap:break-word;
+		box-shadow:1px 1px 3px rgba(0, 0, 0, 0.5);
+	}
+	
+	.link {
+		padding:10px 15px 10px 15px;
+		margin: 10px;
+		border : 1px solid #ccc;
+		border-radius:15px;
+		box-shadow : 2px 2px 6px rgba(0,0,0,0.4);
+		background-color : white;
+		font-size : 20px;
+		font-weight : bolder;
+		text-shadow : 1px 1px 2px rgba(0,0,0,0.2);
+		display : block;
+		color : black;
+	}
+	
+	.form-box {
+		margin : 10px 0 10px 10px;
+	}
+	
+	.description {
+		font-weight : bolder;
+		font-size : 15px;
+		margin-left : 10px;
+	}
+	
+	.description a {
+		color : white;
+		text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+	}
+	
+	.nickname {
+		font-weight : bolder;
+		font-size : 20px;
+		color : #339;
+	}
+	
+	#id_message {
+		background-color : white;
+		margin:10px 0 0 0px;
+		padding:7px;
+		border: 1px solid #999;
+		border-radius:8px;
+		box-shadow:1px 1px 3px rgba(0, 0, 0, 0.5);
+		font-size : 16px;
+	}
+	#message-submit {
+		display: inline;
+		border-radius : 4px;
+		background-color : white;
+		position: absolute;
+		padding : 5px 15px 5px 15px;
+		
+		right : 10px;
+	}
+	.message-length {
+		text-align : right;
+		font-size : 12px;
+		color : #999;
+	}
+</style>
+{% endblock %}
+
+{% block header %}
+<h1>{{ book_info.title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+<!-- User Information Area-->
+<div class="user-info">
+	<div class="profileimg-box">
+		<img src="{{ owner.get_profile.get_profileimg }}" />
+	
+		{% if owner == user %}
+			<a id="a_userimg" href="#">이미지 변경</a>
+	
+			<form id="form_userimg" enctype="multipart/form-data" action="/accounts/update_userprofileimg/" method="POST">{% csrf_token %}
+				{{ umessage_form.user }}
+				{{ umessage_form.profileimg }}
+			</form>
+		{% endif %}
+	</div>
+	<div class="user-data">
+	<!-- User Name -->
+	<a class="nickname" href="/accounts/userinfo/owner.id">{{ owner.get_nickname }}</a>
+
+	<p>유저 점수 : {{ owner.get_profile.points }}</p>
+	<p>
+	{% if numofFollow == 0 %}
+		따르는 사람이 없습니다.
+	{% else %}
+		{{ numofFollow }} 명이 따르고 있습니다.
+	{% endif %}
+	</p>
+	</div>
+	
+	<!-- User Message -->
+	<div class="clear"></div>
+	<p class="description">{{ owner.get_nickname }}님의 상태메시지 
+	{% if owner == user %}
+		<a id="a_usermsg" href ="#">[메시지 변경]</a>
+		<a id="a_usermsg_cancel" href ="#">[취소]</a>
+	{% endif %}
+	: </p> 
+	<div id="user_message_wrapper">&nbsp;
+		{% include "accounts/userinfo_message.html" %}
+	</div>
+
+	{% if owner == user %}
+		<form id="form_user_message" method="POST" action=".">{% csrf_token %}
+				{{ umessage_form.user }}
+				{{ umessage_form.message }}
+				<span class="message-length">&nbsp;</span>
+				<input id="message-submit" type="submit" value="확인" />
+		</form>
+	{% endif %}
+
+	<div class="clear">&nbsp;</div>
+	
+
+	<p>
+	{% if is_self == 0 %}
+		{% if is_friend == 0 %}
+			<a href="/accounts/add_favauthor/{{ owner.id }}/1/">관심작가 추가</a>
+		{% else %}
+			<a href="/accounts/add_favauthor/{{ owner.id }}/0/">관심작가 취소</a>
+		{% endif %}
+	{% endif %}
+	</p>
+	
+</div>
+<!-- End of User Information Area-->
+<div class="hr-like"></div>
+<p class="description">{{ owner.get_nickname }}님이 쓴 글들을 볼 수 있습니다 :</p>
+	
+	
+	<p><a href="/posts/{{ owner.id }}/books/" class="link">집필한 책 ({{ numofBook }})</a></p>
+	<p><a href="/posts/{{ owner.id }}/branches/" class="link">참여 가지 ({{ numofBranch}})</a></p>
+
+
+<div class="hr-like"></div>
+<p class="description">{{ owner.get_nickname }}님에게 글을 남겨 주세요 :</p>
+
+<div class="form-box">
+	<!-- User CommentForm -->
+	<form id="form_user_comment" method="post" action="."> {% csrf_token %}
+			{{ uinfo_form.user }} {{ uinfo_form.writer }}
+			{{ uinfo_form.text }}
+		<input type="submit" id="cmt-submit" value="댓글달기" />
+	</form>
+</div>
+
+<!-- UserComment End -->
+<div id="comment-wrapper">
+	{% include "posts/show_comments.html" %}
+</div>
+
+<!-- End -->
+
+{% endblock %}
+
+{% block jquery_code %}
+//<script>
+	// User Message
+	var msg = "{{ owner.get_profile.message }}";
+	$("#form_user_message").hide();
+	$("#a_usermsg_cancel").hide();
+
+	$("#a_usermsg").click( function() {
+		$("#a_usermsg").hide();
+		$("#a_usermsg_cancel").show();
+		$("#form_user_message").show();
+		$("#id_message").attr("value", msg);
+		$("#id_message").focus()
+			.css('width', $("#user_message_wrapper").css('width'))
+			.css('height', $("#user_message_wrapper").css('height'));
+		$("#user_message_wrapper").hide();
+		var len = $("#id_message").val().length;
+		$(".message-length").text(len + "/140 자");
+	});
+
+	$("#a_usermsg_cancel").click( function() {
+		$("#a_usermsg").show();
+		$("#a_usermsg_cancel").hide();
+		$("#form_user_message").hide();
+		$("#user_message_wrapper").show();
+	});
+
+	$("#form_user_message").submit( function() {
+		$.post('/accounts/update_usermessage/', {
+			csrfmiddlewaretoken: $('#form_user_message input[name="csrfmiddlewaretoken"]').val(),
+			user: $('#id_user').val(),
+			message: $('#id_message').val()
+		}, function(data) {
+			$.get('/accounts/update_usermessage/', function(data) {
+				$('#user_message_wrapper').html(data).show();
+				msg = data;
+				$("#a_usermsg").show();
+				$("#a_usermsg_cancel").hide();
+				$("#form_user_message").hide();
+			})
+		})	
+		return false;
+	});
+
+
+	//UserProfile
+	
+	$("#id_profileimg").attr("accept", "image/*");
+	$("#id_profileimg").bind("change", function(){
+		if(this.value.length != 0){
+			$("#form_userimg").submit();
+		}
+	});
+
+	$("#a_userimg").click( function() {
+		$("#id_profileimg").click();
+	});
+	$("#a_userimg_cancel").click( function() {
+		$("#a_userimg").show();
+		$("#a_userimg_cancel").hide();
+		$("#form_userimg").hide();
+	});
+	
+	$("#id_message").attr("maxlength", '140')
+		.bind('input', function(evt){
+			var $ml = $(".message-length");
+			var len = $(this).val().length;
+			$ml.text(len + "/140 자");
+		});
+/*
+	//UserProfile ajax Fail.
+	$("#form_userimg").submit( function() {
+		$.post('/accounts/update_userprofileimg/', {
+			csrfmiddlewaretoken: $('#form_userimg input[name="csrfmiddlewaretoken"]').val(),
+			user: $('#id_user').val(),
+			profileimg: $('#id_profileimg').val()
+		}, function(data) {
+			$.get('/accounts/update_userprofileimg/', function(data) {
+				$('#userimg_wrapper').html(data)
+			})
+		})	
+		return false;
+	});
+*/
+
+	//User Comment
+	$("#form_user_comment").submit( function() {
+		$.post('/accounts/userinfo/{{ owner.id }}/', {
+			csrfmiddlewaretoken: $('#form_user_comment input[name="csrfmiddlewaretoken"]').val(),
+			user: $('#id_user').val(),
+			writer: $('#id_writer').val(),
+			text: $('#id_text').val()
+		}, function(data) {
+			$.get('/accounts/show_usercomment/{{ owner.id }}/', function(data) {
+				$('#id_text').val('').focus()
+				$('#comment-wrapper').html(data)
+			})
+		})	
+		return false;
+	});
+//</script>
+{% endblock %}

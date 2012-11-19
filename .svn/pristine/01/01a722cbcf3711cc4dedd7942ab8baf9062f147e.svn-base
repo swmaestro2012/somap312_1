@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<link rel="apple-touch-icon" sizes="114x114" href="images/splash/splash-icon.png"> 
+<link rel="apple-touch-startup-image" href="images/splash/splash-screen.png" media="screen and (max-device-width: 320px)" /> 
+<link rel="apple-touch-startup-image" href="images/splash/splash-screen@2x.png" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" /> 
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>Baller | Mobile Template</title>
+
+<link href="style/style.css" rel="stylesheet" type="text/css">
+<link href="style/buttons.css" rel="stylesheet" type="text/css">
+<link href="style/photoswipe.css" rel="stylesheet" type="text/css">
+<link href="style/retina.css" media="only screen and (-webkit-min-device-pixel-ratio: 2)" rel="stylesheet" />
+
+<script src="scripts/klass.min.js"></script>
+<script src="scripts/jquery.js"></script>
+<script src="scripts/touchSwipe.js"></script>
+<script src="scripts/photoswipe.js"></script>
+<script src="scripts/roundabout.js"></script>
+<script src="scripts/contact.js"></script>
+<script src="scripts/retina.js"></script>
+<script src="scripts/custom.js"></script>
+
+</head>
+
+<body onload="touchScroll('scrollMe')">
+
+<div class="content">
+	<div class="header">
+    	<a href="#" class="deploy-nav header-icon"></a>
+        <a href="#" class="hide-nav header-icon-active"></a>
+    	<h1 class="page-title-small">INTERACTIVE ELEMENTS</h1>
+        <a href="mailto:mail@domain.com" class="contact-icon header-icon"></a>
+    </div>
+    <div class="header-notification">
+    	<p class="center-text">This alert dissaperas after 5 seconds!</p>
+    </div>
+ 
+	<p class="center-text"><img src="images/logo.png" alt="img" width="217" class="replace-2x logo"></p>
+
+    <div class="decoration"></div>
+    
+    <div class="container">
+    	<h3 class="left-text text-space">TOGGLES! STRESS THEM OUT!</h3>
+    	<div class="toggle">
+        	<a href="#" class="toggle-deploy">Tap me to open!</a>
+            <a href="#" class="toggle-close">Tap me to close!</a>
+            <p class="toggle-content">
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and 
+                scrambled it to make a type specimen book.
+            </p>
+        </div>
+    </div>
+    
+    <div class="decoration"></div>
+   
+    <div class="container">
+    	<h3 class="left-text text-space">NOTIFICATION BOXES ARE AWESOME!</h3>
+        <div class="notification-box-green">
+            <a href="#" class="notification-quit-green">x</a>
+            <img class="notification-icon" width="16" src="images/lists/tick_32.png" alt="">
+            <p class="notification-text">Yes, green is good!</p>
+            </div>
+        <div class="notification-box-yellow">
+            <a href="#" class="notification-quit-yellow">x</a>
+            <img class="notification-icon" width="16" src="images/lists/warning_32.png" alt="">
+            <p class="notification-text">Something requires attention!</p>
+        </div>
+        <div class="notification-box-blue">
+            <a href="#" class="notification-quit-blue">x</a>
+            <img class="notification-icon" width="16" src="images/lists/info_32.png" alt="">
+            <p class="notification-text">Something interesting!</p>
+        </div>
+        <div class="notification-box-red">
+            <a href="#" class="notification-quit-red">x</a>
+            <img class="notification-icon" width="16" src="images/lists/delete_32.png" alt="">
+            <p class="notification-text">Attention! Bad things here!</p>
+        </div>
+    </div>
+   
+    <div class="decoration"></div>
+    <div class="container">
+    	<h3 class="left-text text-space">CHECKBOXES AND RADIOS!</h3>
+        <a href="#" class="checkbox">Check Me!</a><br/><br/>
+        <a href="#" class="checkbox2">Check Me!</a><br/><br/>
+        <a href="#" class="radiobox">Click Me!</a><br/><br/>
+        <a href="#" class="radiobox2">Click Me!</a>
+    </div>
+       
+       
+    <div class="decoration"></div>
+    <p class="center-text copyright">Copyright 2012. All rights reserved</p>
+   
+</div>
+
+<div class="sidebar">
+	<div class="sidebar-hide-scroll" id="scrollMe">
+	<div class="sidebar-header">
+		<h1 class="sidebar-title">FEATURES</h1>
+    </div>
+    <p class="sidebar-divider no-top">
+    	NAVIGATION
+    </p>
+    <a class="menu-item menu-icon home" href="index.html">HOMEPAGE <em></em></a>
+    <a class="menu-item menu-icon alert3" id="sub-menu-one" href="#">FEATURES<strong></strong></a>
+    	<div class="sub-menu-one">
+        	<a href="type.html" class="sub-menu-item">Typography Features</a>
+            <a href="feat.html" class="sub-menu-item">jQuery Features</a>
+            <a href="other.html" class="sub-menu-item">Other Features</a>
+        </div>
+    <a class="menu-item menu-icon img" id="sub-menu-two" href="#">GALLERY<strong></strong></a>
+    	<div class="sub-menu-two">
+        	<a href="fullfolio.html" class="sub-menu-item">Full Width Portfolio</a>
+            <a href="thumbgall.html" class="sub-menu-item">Thumbnail Gallery</a>
+        </div>
+	<a class="menu-item menu-icon list-image" href="blog.html">BLOG<em></em></a>
+    <a class="menu-item menu-icon mail last-menu-item" href="contact.html">CONTACT<em></em></a>
+    <p class="sidebar-divider">
+    	GET SOCIAL WITH US
+    </p>
+    <a class="menu-item menu-icon facebook" target="_blank" href="http://www.facebook.com/enabled.labs">FACEBOOK PAGE</a>
+    <a class="menu-item menu-icon last-menu-item twitter" target="_blank" href="https://twitter.com/iEnabled">TWITTER PAGE</a>
+    <p class="sidebar-divider">
+    	GET IN TOUCH WITH US
+    </p>
+    <a class="menu-item menu-icon phone" href="tel:+1234567890">CALL US</a>
+    <a class="menu-item menu-icon speach" href="sms:+1234567890">TEXT US</a>
+    <a class="menu-item menu-icon last-menu-item mail" href="mailto:mail@domain.com">MAIL US</a>
+    <p class="sidebar-divider">
+    	TAP THE CONTENT TO CLOSE
+    </p>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+

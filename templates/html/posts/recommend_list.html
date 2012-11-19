@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/posts/booklist.css" />
+{% endblock %}
+
+{% block content %}
+<header>BEST Contents</header>
+<ul class="book-list">
+{% for book in book_list %}
+	<li class="book-list-item">
+		<a href = "/posts/get_bookinfo/{{ book.id }}">
+			<img src="{{ book.get_coverimg }}"></a>
+			<div class="book-item-info">
+				<a href="/posts/get_bookinfo/{{ book.id }}" class="book-item-title">{{ book.title }}</a>
+				<a href="#" class="book-item-genre">{{ book.get_genre_display }}</a>
+				<a href="#" class="book-item-nickname">{{ book.creator.get_nickname }}</a>
+			</div>	
+		
+	</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

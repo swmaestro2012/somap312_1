@@ -1,0 +1,158 @@
+# _*_ coding: utf-8 _*_
+
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from forms import UserCommentForm, UserProfileForm
+from models import UserComment, UserProfile, FavoriteUser
+from posts.models import Book, Branch
+from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+
+def signup_page(request):
+    return render_to_response('accounts/signup.html', RequestContext(request, { 'form': UserCreationForm() }))
+
+def redirect_to_login(request):
+    return HttpResponseRedirect('/')
+
+def signup_confirmed(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect('/')
+
+    signup_form = UserCreationForm(request.POST)
+
+    if signup_form.is_valid():
+        signup_form.clean_username()
+        signup_form.clean_password2()
+        user=signup_form.save()
+
+        # TODO: 회원가입이 완료되었다는 메시지
+
+        # UserProfile 이어주기
+        UserProfile.objects.create(user=user)
+
+    else:
+        return render_to_response('accounts/signup.html', RequestContext(request, { 'form': signup_form, 'errors': signup_form.errors }))
+
+    return HttpResponseRedirect('/')
+
+
+@login_required(login_url='/accounts/login/')
+def get_userinfo(request, author_id):
+    # fields = ('user', 'writer', 'text',)
+
+    try:
+        owner = User.objects.get(id=author_id)
+    except User.DoesNotExist:
+        raise Http404
+
+    # TODO: Make function and move to there
+    if request.method == "POST":
+        uinfo_form = UserCommentForm(request.POST)
+        print uinfo_form.errors
+        if uinfo_form.is_valid():
+            uinfo_form.save()
+
+            return HttpResponseRedirect('/accounts/userinfo/' + author_id)
+
+    usercomments = UserComment.objects.filter(user=owner)
+
+    # 친구 관계가 맺어져 있는지 일단 검사
+    is_friend = False
+    try:
+        fu = FavoriteUser.objects.get(user=owner, follower=request.user)
+        if fu.follower == request.user:
+            is_friend = True
+    except FavoriteUser.DoesNotExist:
+        pass
+        
+    uinfo_form = UserCommentForm({'user': owner, 
+                                  'writer': request.user})
+
+    umessage_form = UserProfileForm({'user': owner, })
+
+    # 집필한 책  / 참여 브랜치  / 따르는 유저 수 
+    numofBook = Book.objects.filter(creator=owner).exclude(root_branch=None).count()
+    numofBranch = Branch.objects.filter(author=owner, is_temporary=False).count()
+    numofFollow = FavoriteUser.objects.filter(user=owner).count()
+
+    return render_to_response("accounts/userinfo.html", RequestContext(request, {
+            'uinfo_form': uinfo_form,
+            'umessage_form': umessage_form,
+            'owner': owner,
+            'is_self': owner==request.user,
+            'is_friend': is_friend,
+            'comments': usercomments,
+            'numofBook': numofBook,
+            'numofBranch': numofBranch,
+            'numofFollow': numofFollow,
+        }))
+
+@login_required(login_url='/accounts/login/')
+def add_favauthor(request, favauthor, addornot):
+    try:
+        fav = User.objects.get(id=favauthor)
+    except User.DoesNotExist:
+        raise Http404    
+
+    if addornot == '1':
+        try:
+            FavoriteUser.objects.create(user=fav, follower=request.user,
+                                        user_str=fav.nickname, follower_str=request.user.nickname)
+        except: # Duplicated Add, User and Follower are unique.
+            pass
+    else: #0
+        try:
+            relation = FavoriteUser.objects.get(user=fav, follower=request.user)
+        except FavoriteUser.DoesNotExist:
+            raise Http404
+
+        relation.delete()
+
+    return HttpResponseRedirect("/accounts/userinfo/" + str(fav.id))
+
+@login_required(login_url='/accounts/login/')
+def show_favauthor(request):
+    fav_authors = FavoriteUser.objects.filter(follower=request.user)
+
+    return render_to_response("accounts/show_favauthor.html", RequestContext(request, {
+            'fav_authors': fav_authors
+        }))
+
+
+@login_required(login_url='/accounts/login/')
+def update_usermessage(request):
+    if request.method == "POST":
+        umessage_form = UserProfileForm(request.POST, instance=request.user.get_profile())
+        print umessage_form.errors
+        if umessage_form.is_valid():
+            userprofile = umessage_form.save()
+
+            #return HttpResponseRedirect("/accounts/userinfo/" + str(request.user.id))
+            return HttpResponse(userprofile.message)
+
+    return HttpResponse(request.user.get_profile().message)
+
+
+@login_required(login_url='/accounts/login/')
+def update_userprofileimg(request):
+    if request.method == "POST":
+        uprofile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.get_profile())
+        print uprofile_form.errors
+        if uprofile_form.is_valid():
+            uprofile_form.save()
+            
+            return HttpResponseRedirect("/accounts/userinfo/" + str(request.user.id))
+
+    raise Http404
+
+
+@login_required(login_url='/accounts/login/')
+def show_usercomment(request, user_id):
+    usercomments = UserComment.objects.filter(user=user_id)
+
+    return render_to_response('posts/show_comments.html', RequestContext(request, {
+            "comments": usercomments,
+    }))

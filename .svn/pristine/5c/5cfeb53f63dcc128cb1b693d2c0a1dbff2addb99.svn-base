@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block custom_header %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/get_bookinfo.css"/>
+{% endblock %}
+{% block header %}
+<h1>{{ book_info.title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+	<!-- book information -->
+	<div id="book-info-container">
+		<img id="book-cover" src="{{ book_info.get_coverimg }}" />
+		<div id="book-info">
+			<p id="book-title"> {{ book_info.title }} </p>
+			<a href="#" class="cmt-nickname"> {{ book_info.creator.get_nickname }} </a>
+			<p> {{ book_info.get_genre_display }} </p>
+			<p> {{ book_info.synopsis }} </p>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<button id="toggle-book-info">책 정보 접기</button>
+	<!-- End -->
+	
+	<div class="divider"></div>
+	
+
+	{{ tree_data }}
+
+<!-- Index of Book -->
+<!--
+	<div id="book-indexes">
+		<header>목차</header>
+		<ul data-role="listview">
+			{% for branch in branch_list %}
+				{% if branch.is_temporary == 0 %}
+					<li>
+						<a href = "/posts/read_branch/{{ branch.id }}/" class="branch-title">
+							{{ branch.title }}
+						</a>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+-->
+<!-- End -->
+
+	<div class="divider"></div>
+	<!-- Commentation of Book -->
+	<div id="cmt-post-form">
+		<form method="post" id="book-comment-form" action="."> {% csrf_token %}
+			{{ bookcomment_form.book }} {{ bookcomment_form.writer }}
+			{{ bookcomment_form.text }}
+			<input type="submit" id="cmt-submit" value="댓글달기" />
+		</form>
+	</div>
+	<!-- End -->
+
+
+	<!-- View of Comment -->
+	<div id="comment-wrapper">
+	{% include "posts/show_comments.html" %}
+	</div>
+	<!-- End -->
+{% endblock %}
+
+
+{% block right_bar %}
+	{% if book_info.root_branch == null %}
+		<a class="menu-item menu-icon facebook" 
+			href="/posts/write_branch/{{ book_info.id }}/0/0/">첫회쓰기<em></em></a>
+			<!-- book_info.root_branch == 0 -->
+	{% endif %}
+{% endblock %}
+
+
+{% block jquery_code %}
+</script><script>
+$('#toggle-book-info').bind('click', function() {
+	var text = $(this).text();
+	if(text == "책 정보 접기"){
+		$(this).text("책 정보 펼치기");
+	} else {
+		$(this).text("책 정보 접기");
+	}
+	$('#book-info-container').slideToggle();
+});
+
+$("#book-comment-form").submit( function() {
+	$.post('/posts/get_bookinfo/{{ book_info.id }}/', {	
+		csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+		book: $('#id_book').val(),
+		writer: $('#id_writer').val(),
+		text: $('#id_text').val()
+	}, function(data) {
+		$.get('/posts/show_bookcomment/{{ book_info.id }}/', function(data) {
+			$('#id_text').val('').focus();
+			$('#comment-wrapper').html(data)
+		})
+	})	
+	return false;
+});
+
+</script><script>
+{% endblock %}

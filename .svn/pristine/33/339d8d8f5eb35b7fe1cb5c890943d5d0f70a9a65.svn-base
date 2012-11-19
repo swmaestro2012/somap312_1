@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/posts/booklist.css" />
+{% endblock %}
+
+{% block content %}
+	<header>BEST Contents</header>
+	<ul class="book-list">
+		<div id="book-list-wrapper">
+			{% include "posts/books.html" %}	
+		</div>
+			
+		<a id="a_more_view">더 보기</a>
+	</ul>
+{% endblock %}
+
+
+{% block jquery_code %}
+</script><script>
+$("#a_more_view").click(function() {
+	
+	const BEST_BOOK_TYPE = 1
+	const NEW_BOOK_TYPE = 2
+	const MY_BOOK_TYPE = 3
+
+	var book_page = $("#book_page").val()
+	var is_lastpage = $("#is_lastpage").val()
+	var book_type = $("#book_type").val()
+	if(is_lastpage == "True") {
+		$("#a_more_view").remove();
+		return;
+	}
+	
+	$("#book_page").remove()
+	$("#is_lastpage").remove()
+	$("#book_type").remove()
+
+	if(book_type == BEST_BOOK_TYPE) {
+		$.get("/posts/recommend_list/?page=" + book_page, function(data) {
+			$('#book-list-wrapper').append(data)
+		})
+	} else if(book_type == NEW_BOOK_TYPE) {
+		$.get("/posts/show_newlist/?page=" + book_page, function(data) {
+			$('#book-list-wrapper').append(data)
+		})
+	} else if(book_type == MY_BOOK_TYPE) {
+		$.get("/posts/{{ user.id }}/books/?page=" + book_page, function(data) {
+			$('#book-list-wrapper').append(data)
+		})
+	}
+
+	return false;
+})
+</script><script>
+{% endblock %}

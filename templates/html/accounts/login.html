@@ -1,0 +1,188 @@
+
+{% load url from future %}
+
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="utf-8"/>
+        <style type="text/css">
+            body {
+                margin:0;
+                padding:0;
+                background-image:url({{ STATIC_URL}}images/login/login-back-sec.jpg);
+                background-repeat:no-repeat;
+                background-position: center top;
+            }
+
+            header{
+                text-align: center;
+                margin-bottom: 75px;
+                margin:15%;
+                margin-top:50px;
+                margin-bottom:50px;
+                width:70%;
+
+                padding-top:50px;
+                padding-bottom:50px;
+
+                border: 2px solid #e66;
+                border-radius:8px;
+
+                background-color: rgba(255, 255, 255, 0.95);
+            }
+
+            #login-box {
+                border:1px solid #cccccc;
+                padding:4%;
+                position: relative;
+                width: 84%;
+                /*height: 200px; */
+                margin:0px;
+                left: 4%;
+                background-color:#FFFFFF;
+
+                z-index:999;
+
+                -webkit-box-shadow: inset 0px 1px 0px 3px rgba(0, 0, 0, 0.04);
+                box-shadow: inset 0px 1px 0px 3px rgba(0, 0, 0, 0.04);
+            }
+
+            #id_username{
+                background-image:url({{ STATIC_URL}}images/login/user.png);
+                background-repeat:no-repeat;
+                background-position:97% 50%;
+                font-family: 'Open Sans', sans-serif;
+                color:#aeaeae;
+                width:92%;
+                background-color:#FFFFFF;
+                border:solid 1px #cccccb;
+                webkit-border-radius: 4px;
+                border-radius: 4px;
+                padding:10px;
+                -webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+                box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+                margin-bottom:20px;
+                margin-top:10px;
+            }
+
+            #id_username:focus{
+                border:solid 1px #F33;
+            }
+
+            #id_password{
+                background-image:url({{ STATIC_URL}}images/login/password.png);
+                background-repeat:no-repeat;
+                background-position:97% 50%;
+                font-family: 'Open Sans', sans-serif;
+                color:#aeaeae;
+                width:92%;
+                background-color:#FFFFFF;
+                border:solid 1px #cccccb;
+                webkit-border-radius: 4px;
+                border-radius: 4px;
+                padding:10px;
+                -webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+                box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+                margin-bottom:10px;
+            }
+
+            #id_password:focus{
+                border:solid 1px #F33;
+            }
+
+            .checkbox{
+                font-family: 'Open Sans', sans-serif;
+                background-image:url({{ STATIC_URL}}images/login/checkbox.png);
+                background-position:0 0px;
+                background-repeat:no-repeat;
+                text-decoration:none;
+                color:#959595;
+                font-size:12px;
+                padding-left:25px;
+                margin-left:10px;
+            }
+
+            .login-check{
+                padding-top:0px;
+                padding-bottom:8px;
+                background-position:0 0px!important;
+            }
+
+            .selected-checkbox{
+                background-image:url({{ STATIC_URL}}images/login/checkbox-selected.png);
+            }
+
+            .buttonBig {
+                float: right;
+                margin-right: 10px;
+                margin-top: -10px;
+                background-color: rgba(226, 234, 238, 0.4);
+                height: 38px;
+                -webkit-border-radius: 38px;
+                border-radius: 38px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            .float-right{
+                float: right;
+            }
+            #login-button{
+                background-image : url({{ STATIC_URL}}images/login/login-leaf.png);
+                background-repeat: no-repeat;
+                background-position: 5px 50%;
+                background-color:transparent;
+                padding-left:45px;
+
+                font-family: 'Open Sans', sans-serif;
+                color:#aeaeae;
+                border:solid 1px #cccccb;
+                webkit-border-radius: 4px;
+                border-radius: 4px;
+                -webkit-box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+                box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+
+                height: 45px;
+
+                cursor: pointer;
+            }
+
+            .clear{
+                clear:both;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="headerWrap">
+            <header>
+                <h1>여러가지</h1>
+                <p>Various Branches</p>
+            </header>
+        </div>
+
+        <div id="content">
+            <div id="login-box">
+                <form method="post" action="{% url 'django.contrib.auth.views.login' %}">{% csrf_token %}
+                    {{ form.username }}
+                    {{ form.password }}
+                    {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}       
+                <!-- Login Button -->
+                <span><a href="/accounts/signup/">SignUp</a></span>
+                <div class="float-right"><input type="submit" id="login-button" value="Log-in"></div>
+                <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="footerWrap">
+            <footer>
+
+            </footer>
+        </div>
+    </body>
+</html>

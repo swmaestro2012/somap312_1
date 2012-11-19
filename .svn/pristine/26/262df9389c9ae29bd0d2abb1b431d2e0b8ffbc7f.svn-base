@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/write_branch.css"/>
+
+<script language="javascript">
+	function form_submit(){
+		var checked = $('#id_is_temporary').get(0).checked;
+		
+		if(!checked){
+			var user_result = confirm("가지를 붙인 후에는 수정 또는 삭제할 수 없습니다.\n그대로 진행하시겠습니까?");
+			if(user_result){
+				var $contents = $("#id_contents");
+				var $fake = $("#id_fake_contents");
+				$contents.val((function(){
+					return $("<div/>").text($fake.val()).html().replace(/\r\n|\n/g, "<br/>");
+				})());
+				
+				document.forms.write_branch_form.submit();
+			}
+		} else {
+			document.forms.write_branch_form.submit();
+		}
+	}
+</script>
+{% endblock %} 
+
+{% block content %}
+	<header>가지 쓰기</header>
+	<form name="write_branch_form" action="/posts/write_branch/{{book_info}}/{{parent_branch}}/{{cur_branch}}/" method="POST">{% csrf_token %}
+		<div class="branch-write-form">
+			{{ form.book }}
+			{{ form.author }}
+			{% if parent_branch != '0' %}
+				{{ form.parent_branch }}
+			{% endif %}
+			 
+	
+			{{ form.title }}
+			{{ form.contents }}
+			<textarea id="id_fake_contents" placeholder="내용을 입력해 주세요."></textarea>
+			<br>
+			{{ form.is_temporary }}<label for="id_is_temporary">임시저장</label>
+			<input type="button" class="button white-btn" id="branch-submit" value="가지쓰기">
+		</div>
+	</form>
+{% endblock %}
+
+{% block jquery_code %}
+	$('#id_is_temporary').get(0).checked = true;
+	
+	$('#branch-submit').bind('click', function(){
+		form_submit();
+	});
+{% endblock %}

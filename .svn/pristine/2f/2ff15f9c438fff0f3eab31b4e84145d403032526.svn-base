@@ -1,0 +1,35 @@
+from django.contrib.auth.models import User
+from django.db import models
+from varbr import settings
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    profileimg = models.ImageField(blank=True, null=True, upload_to='profileimg/')
+    points = models.IntegerField(default=0)
+
+    class Meta:
+        pass
+
+    def get_profileimg(self):
+        if self.profileimg == "":
+            return settings.STATIC_URL + "default_profile.jpg"
+        else:
+            # 9 is length of "coverimg/"
+            return settings.MEDIA_URL + "profileimg/thumbnail/" + self.coverimg.name[11:]
+
+class UserComment(models.Model):
+    text = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, related_name='user_user')
+    #writer_str = models.CharField(max_length=30)
+    writer = models.ForeignKey(User, related_name='user_writer')
+
+
+class FavoriteUser(models.Model):
+    user = models.ForeignKey(User, related_name='favoriteuser_user')
+    user_str = models.CharField(max_length=30, blank=True)
+    follower = models.ForeignKey(User, related_name='favoriteuser_follower')
+    follower_str = models.CharField(max_length=30, blank=True)
+
+    class Meta:
+        unique_together = ("user", "follower")

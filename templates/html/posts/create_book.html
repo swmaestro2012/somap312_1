@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<script src="{{ STATIC_URL }}js/validation.js"></script>
+<style type="text/css">
+	#form-wrap {
+		margin:0;
+		padding:0;
+		padding-top: 10px;
+	}
+	
+	.round-inner-shadow {
+		-webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    webkit-border-radius: 4px;
+	    border-radius: 4px;
+	}
+	
+	#id_coverimg {		
+		background-color:white;
+	    color:#aeaeae;
+	    display:block;
+	    width:100%;
+	    border:solid 1px #cccccb;
+	    padding:10px 0px 10px 0px;
+	    text-indent : 10px;
+	    margin-bottom:20px;
+	}
+	
+	#id_title{
+	    font-family: 'Open Sans', sans-serif;
+	    color:#aeaeae;
+	    display:block;
+	    width:100%;
+	    background-color:#FFFFFF;
+	    border:solid 1px #cccccb;
+	    padding:10px 0px 10px 0px;
+	    text-indent : 10px;
+	    margin-bottom:20px;
+	}
+	
+	#id_genre{
+	    font-family: 'Open Sans', sans-serif;
+	    color:#aeaeae;
+	    display:block;
+	    width:100%;
+	    background-color:#FFFFFF;
+	    border:solid 1px #cccccb;
+	    padding:10px;
+	    margin-bottom:20px;
+	}
+	
+	#synopsis-box {
+		overflow:hidden;
+		background-color:white;
+		width:100%;
+		margin-bottom : 10px;
+	}
+	
+	#id_synopsis {
+		width:100%;
+		height:200px;
+		padding : 10px;
+		background-color : transparent;
+		margin:0;
+		border:0;
+		max-length : 200;
+	}
+	
+	.submit{
+	    background-color:#fff;
+	    color:#aeaeae;
+	    border:solid 1px #cccccb;
+	    webkit-border-radius: 4px;
+	    border-radius: 4px;
+	    -webkit-box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+	    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);	
+		width : 100%;
+	    height: 50px;
+	
+	    cursor: pointer;
+	}
+	
+	#synopsis-length {
+		margin:0 0 3px 0;
+		text-align: right;
+	}
+	
+	.invalid {
+		border:1px solid red;
+		background-color:red;
+	}
+</style>
+
+{% endblock %}
+
+{% block content %}
+ <div class="container">
+ 	<div id="form-wrap">
+		<form id="bookCreateForm" enctype="multipart/form-data" action="/posts/create_book/" method="POST" data-ajax="false">{% csrf_token %}
+		{{ form.creator }}
+	 	{{ form.coverimg }}
+	 	
+	 	<div id="title-genre">
+			{{ form.title }}
+			{{ form.genre }}
+		</div>
+		<p id="synopsis-length">남은 글자 수 : <span>0</span>자</p>
+		<div id="synopsis-box" class="round-inner-shadow">
+		{{ form.synopsis }}
+		</div>
+			
+		<input type="submit" class="submit" value="만들기" />
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block jquery_code %}
+//<script>
+$("#id_coverimg").addClass("round-inner-shadow");
+$("#id_title").addClass("round-inner-shadow");
+$("#id_genre").addClass("round-inner-shadow");
+$("#id_synopsis").bind("input", function(evt){
+	var remnant = $(this).attr('maxlength') - this.value.length;
+	$("#synopsis-length span").text(remnant);
+})
+.attr('maxlength', 200);
+$("#bookCreateForm").submit(function(evt){
+	evt.preventDefault();
+	
+	var $title = $("#id_title");
+	var title = $title.get(0);
+	var $synopsis = $("#id_synopsis");
+	var synopsis = $synopsis.get(0);
+	
+	if(isEmpty(title, function(){
+		$title.css('border-color', "red");
+		$title.attr('placeholder', '제목을 입력해 주세요.');
+		$title.focus();
+	})) return;
+	$title.css('border-color', "#cccccb");
+	
+	if(isEmpty(synopsis, function(){
+		$("#synopsis-box").css('border-color', "red");
+		$synopsis.attr('placeholder', '제목을 입력해 주세요.');
+		$synopsis.focus();
+	})) return;
+	$("#synopsis-box").css('border-color', "#cccccb");
+	
+	
+	this.submit();
+	console.log(evt);
+});
+
+//</script>
+{% endblock %}
