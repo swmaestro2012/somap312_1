@@ -38,6 +38,7 @@
 	<div class="header">
     	<a href="#" class="deploy-nav header-icon"></a>
         <a href="#" class="hide-nav header-icon-active"></a>
+        <h1 class="page-title">{% block page_title %}{% endblock %}</h1>
         <ul class="direct-link-list">
         	<!-- <li><a href="#">메뉴</a></li> -->
         	{% block direct_link %}{% endblock %}
@@ -66,36 +67,22 @@
     	</div>
     </div>
 
-    <p class="sidebar-divider">
-    	여러가지
-    </p>
-    <a class="menu-item menu-icon home" href="/posts/recommend_list/">명예의 전당<em></em></a>
-    <a class="menu-item menu-icon alert3" href="/posts/show_newlist/">최신작<em></em></a>
-    <a class="menu-item menu-icon alert3 last-menu-item" href="#">검색<em></em></a>
+    <p class="sidebar-divider"></p>
+    <a class="menu-item varbr-icon varbr-laurel-icon" href="/posts/recommend_list/">명예의 전당<em></em></a>
+    <a class="menu-item varbr-icon varbr-new-icon" href="/posts/show_newlist/">최신작<em></em></a>
+    <a class="menu-item varbr-icon varbr-find-icon last-menu-item" href="/posts/search_book/">검색<em></em></a>
 
-    <p class="sidebar-divider">
-    	서재
-    </p>
-    <a class="menu-item menu-icon facebook" href="/posts/show_bookmarks/">책 갈피<em></em></a>
-    <a class="menu-item menu-icon last-menu-item twitter" href="/posts/{{ user.id }}/books/">심은 책<em></em></a>
-    <a class="menu-item menu-icon alert3" href="/posts/{{ user.id }}/branches/">붙인 가지<em></em></a>
-    <a class="menu-item menu-icon alert3" href="#">댓글 한 잎<em></em></a>
-    <a class="menu-item menu-icon alert3" href="/posts/create_book/">책 심기<em></em></a>
-    <a class="menu-item menu-icon alert3 last-menu-item" href="/posts/working_branch/">작성중인 가지<em></em></a>
-    <p class="sidebar-divider">
-
-    </p>
+    <p class="sidebar-divider"></p>
+    <a class="menu-item varbr-icon varbr-bookmark-icon" href="/posts/show_bookmarks/">책갈피<em></em></a>
+    <a class="menu-item varbr-icon last-menu-item varbr-book-icon" href="/posts/{{ user.id }}/books/">내 서재<em></em></a>
+    <a class="menu-item varbr-icon varbr-comment-icon" href="#">댓글 모아보기<em></em></a>
+    <a class="menu-item varbr-icon varbr-write-icon" href="/posts/create_book/">책 만들기<em></em></a>
+    <a class="menu-item varbr-icon varbr-work-icon last-menu-item" href="/posts/working_branch/">작업실<em></em></a>
+    <p class="sidebar-divider"></p>
     <a class="menu-item menu-icon phone last-menu-item" href="/accounts/show_favauthor/">관심작가<em></em></a>
-    <p class="sidebar-divider">
-
-    </p>
-    <a class="menu-item menu-icon speach" href="#">계정설정<em></em></a>
-    <a class="menu-item menu-icon last-menu-item mail" id="sub-menu-one" href="mailto:mail@domain.com">고객센터<strong></strong></a>
-        <div class="sub-menu-one">
-            <a href="fullfolio.html" class="sub-menu-item">건의사항</a>
-            <a href="thumbgall.html" class="sub-menu-item">문의사항</a>
-        </div>
-    <a class="menu-item menu-icon last-menu-item mail" href="/accounts/logout/">LOG OUT</a>
+    <p class="sidebar-divider"></p>
+    <a class="menu-item varbr-icon varbr-setting-icon" href="/accounts/settings/">계정설정<em></em></a>
+    <a class="menu-item varbr-icon last-menu-item varbr-logout-icon" href="/accounts/logout/">LOG OUT</a>
     </div>
 </div>
 

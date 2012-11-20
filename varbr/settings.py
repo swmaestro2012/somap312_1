@@ -10,6 +10,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+LOGIN_URL = "/accounts/login/"
+
 MANAGERS = ADMINS
 if os.environ.has_key("PRODUCTION"):
     DATABASES = {
@@ -174,7 +176,7 @@ DEBUG_TOOLBAR_PANELS = (
 )
 
 def custom_show_toolbar(request):
-    return True
+    return False
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,

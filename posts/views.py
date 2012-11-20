@@ -9,14 +9,23 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+############# BOOKS
+INDEX_PAGE_BOOKS = 5
+BOOK_PAGINATION = 4
+
 BEST_BOOK_TYPE = 1
 NEW_BOOK_TYPE = 2
 MY_BOOK_TYPE = 3
 
-BOOK_PAGINATION = 4
-INDEX_PAGE_BOOKS = 5
+############# BRANCHES
+BRANCH_PAGINATION = 4
 
-@login_required(login_url='/accounts/login/')
+MY_BRANCHED_TYPE = 1
+MY_BRANCHING_TYPE = 2
+MY_BOOKMARK_TYPE = 3
+#############
+
+@login_required
 def main_page(request):
     best_books = Book.objects.order_by("-like_count")[:INDEX_PAGE_BOOKS]
 
@@ -25,7 +34,7 @@ def main_page(request):
         }))
 
 # 명예의전당
-@login_required(login_url='/accounts/login/')
+@login_required
 def recommend_list(request):
     book_list = Book.objects.exclude(root_branch=None).order_by("-like_count")
     paginator = Paginator(book_list, BOOK_PAGINATION)
@@ -61,7 +70,7 @@ def recommend_list(request):
 
 
 # 최신작
-@login_required(login_url='/accounts/login/')
+@login_required
 def show_newlist(request):
     book_list = Book.objects.exclude(root_branch=None).order_by("-id")
     paginator = Paginator(book_list, BOOK_PAGINATION)
@@ -95,18 +104,66 @@ def show_newlist(request):
             'is_lastpage': page==paginator.num_pages,
         }))
 
-# 책갈피
-@login_required(login_url='/accounts/login/')
-def show_bookmarks(request):
-    bookmark_list = Bookmark.objects.filter(user=request.user)
+# 검색
+@login_required
+def search_book(request):
+    query = request.GET.get("query")
+    genre = request.GET.get("genre")
 
-    return render_to_response('posts/branch_list.html', RequestContext(request, {
+    print "query=%s, genre=%s" % (query, genre)
+
+    if query is None and genre is None:
+        return render_to_response('posts/search_book.html', RequestContext(request))
+
+    if query and genre:
+        book_list = Book.objects.filter(title=query, genre=genre).order_by("-id")
+    elif query:
+        book_list = Book.objects.filter(title=query).order_by("-id")
+    elif genre:
+        book_list = Book.objects.filter(genre=genre).order_by("-id")
+
+    return render_to_response('posts/search_book.html', RequestContext(request, {
+            "book_list": book_list,
+        }))
+
+# 책갈피 MY_BOOKMARK_TYPE
+@login_required
+def show_bookmarks(request):
+    bookmark_list = Bookmark.objects.filter(user=request.user).order_by("-id")
+    paginator = Paginator(bookmark_list, BRANCH_PAGINATION)
+
+    page = request.GET.get("page")
+
+    if page == None:
+        page = 1
+    else:
+        page = int(page)
+
+    try:
+        bookmark_list = paginator.page(page)
+    except PageNotAnInteger:
+        pass
+    except EmptyPage:
+        page=-1
+
+    if page == 1: 
+        return render_to_response('posts/branch_list.html', RequestContext(request, {
+                'bookmark_list': bookmark_list,
+                'page': page+1,
+                'type': MY_BOOKMARK_TYPE,
+                'is_lastpage': page==paginator.num_pages,
+            }))
+    else:
+        return render_to_response('posts/branches.html', RequestContext(request, {
             'bookmark_list': bookmark_list,
+            'page': page+1,
+            'type': MY_BOOKMARK_TYPE,
+            'is_lastpage': page==paginator.num_pages,
         }))
 
 
 # 심은 책
-@login_required(login_url='/accounts/login/')
+@login_required
 def get_author_books(request, author_id):
     book_list = Book.objects.filter(creator=author_id).order_by("-id")
 
@@ -143,25 +200,59 @@ def get_author_books(request, author_id):
 
 
 # 작성한 가지
-@login_required(login_url='/accounts/login/')
+@login_required
 def get_author_branches(request, author_id):
-    branch_list_worked = Branch.objects.filter(author=author_id, is_temporary=False)
-    return render_to_response('posts/branch_list.html', RequestContext(request, {
-            'branch_list_worked': branch_list_worked,
-        }))
+    branch_list = Branch.objects.filter(author=author_id, is_temporary=False)
+
+    paginator = Paginator(branch_list, BRANCH_PAGINATION)
+
+    page = request.GET.get("page")
+
+    if page == None:
+        page = 1
+    else:
+        page = int(page)
+
+    try:
+        branch_list = paginator.page(page)
+    except PageNotAnInteger:
+        pass
+    except EmptyPage:
+        pass
+
+    if page == 1:
+        return render_to_response('posts/branch_list.html', RequestContext(request, {
+                'branch_list': branch_list,
+                'page': page+1,
+                'type': MY_BRANCHED_TYPE,
+                'is_lastpage': page==paginator.num_pages,
+            }))
+    else:
+        return render_to_response('posts/branches.html', RequestContext(request, {
+                'branch_list': branch_list,
+                'page': page+1,
+                'type': MY_BRANCHED_TYPE,
+                'is_lastpage': page==paginator.num_pages,
+            }))
 
 
 # 댓글 한 잎
 ####
 
 # 책심기
-@login_required(login_url='/accounts/login/')
+@login_required
 def create_book(request):
     if request.method == "POST":
         book_form = BookCreationForm(request.POST, request.FILES)
         print book_form.errors
         if book_form.is_valid():
-            book = book_form.save()
+            book = book_form.save(commit=False)
+
+            # Check
+            if book.creator != request.user:
+                raise Http404            
+
+            book.save()
             return HttpResponseRedirect('/posts/get_bookinfo/' + str(book.id))
 
     book_form = BookCreationForm({ 'creator': request.user })
@@ -171,26 +262,49 @@ def create_book(request):
 
 
 # 작성중인 가지
-@login_required(login_url='/accounts/login/')
+@login_required
 def working_branch(request):
-    # TODO: Ajax for pagenation
-    branch_list = Branch.objects.all().filter(author=request.user, is_temporary=True)
-    return render_to_response('posts/branch_list.html', RequestContext(request, {
-            'branch_list': branch_list,
-        }))
+    branch_list = Branch.objects.filter(author=request.user, is_temporary=True).order_by("-id")
+
+    paginator = Paginator(branch_list, BRANCH_PAGINATION)
+
+    page = request.GET.get("page")
+
+    if page == None:
+        page = 1
+    else:
+        page = int(page)
+
+    try:
+        branch_list = paginator.page(page)
+    except PageNotAnInteger:
+        pass
+    except EmptyPage:
+        pass
+
+    if page == 1:
+        return render_to_response('posts/branch_list.html', RequestContext(request, {
+                'branch_list': branch_list,
+                'page': page+1,
+                'type': MY_BRANCHING_TYPE,
+                'is_lastpage': page==paginator.num_pages,
+            }))
+    else:
+        return render_to_response('posts/branches.html', RequestContext(request, {
+                'branch_list': branch_list,
+                'page': page+1,
+                'type': MY_BRANCHING_TYPE,
+                'is_lastpage': page==paginator.num_pages,
+            }))
 
 
 # 계정 설정
-
-
-# 고객센터
-
 
 ####################
 
 
 ## 책 정보
-@login_required(login_url='/accounts/login/')
+@login_required
 def get_bookinfo(request, book_id):
 # fields = ('book', 'writer', 'text',)
 # TODO: ajax and 함수 분리.
@@ -204,7 +318,13 @@ def get_bookinfo(request, book_id):
         bookcomment_form = BookCommentForm(request.POST)
         print bookcomment_form.errors
         if bookcomment_form.is_valid():
-            bookcomment_form.save()
+            bookcomment = bookcomment_form.save(commit=False)
+
+            if request.user != bookcomment.writer:
+                raise Http404
+
+            bookcomment.save()
+
             return HttpResponse('');
             #return HttpResponseRedirect('/posts/get_bookinfo/' + book_id)
 
@@ -245,7 +365,7 @@ def get_bookinfo(request, book_id):
     }))
 
 # 브랜치 정보
-@login_required(login_url='/accounts/login/')
+@login_required
 def get_branchinfo(request, branch_id):
     try:
         branch = Branch.objects.get(id=branch_id)
@@ -257,8 +377,13 @@ def get_branchinfo(request, branch_id):
         branchcomment_form = BranchCommentForm(request.POST)
         print branchcomment_form.errors
         if branchcomment_form.is_valid():
-            bf = branchcomment_form.save()
+            bf = branchcomment_form.save(commit=False)
 
+
+            if bf.writer != request.user:
+                raise Http404
+
+            bf.save()
             branch.comment_count = BranchComment.objects.filter(branch=bf.branch).count()
             branch.save()
             return HttpResponse(branch.comment_count);
@@ -279,8 +404,30 @@ def get_branchinfo(request, branch_id):
         }))
 
 
+@login_required
+def show_mybookcomment(request):
+    book = Book.objects.filter(creator=request.user.id)
+    bookcomments = BookComment.objects.filter(book__in=book)
+    print bookcomments
+
+    return render_to_response('posts/show_comments.html', RequestContext(request, {
+            "comments": bookcomments,
+    }))
+
+
+@login_required
+def show_mybranchcomment(request):
+    branch = Branch.objects.filter(author=request.user.id)
+    branchcomments = BranchComment.objects.filter(branch__in=branch)
+    print branchcomments
+
+    return render_to_response('posts/show_comments.html', RequestContext(request, {
+            "comments": branchcomments,
+    }))
+
+
 # 책 코멘트
-@login_required(login_url='/accounts/login/')
+@login_required
 def show_bookcomment(request, book_id):
     bookcomments = BookComment.objects.filter(book=book_id)
 
@@ -290,7 +437,7 @@ def show_bookcomment(request, book_id):
 
 
 # 브랜치 코멘트
-@login_required(login_url='/accounts/login/')
+@login_required
 def show_branchcomment(request, branch_id):
     branchcomments = BranchComment.objects.filter(branch=branch_id)
 
@@ -300,7 +447,7 @@ def show_branchcomment(request, branch_id):
 
 
 ## About 가지
-@login_required(login_url='/accounts/login/')
+@login_required
 def write_branch(request, book_info, parent_branch, cur_branch):
 # fields = ('book', 'title', 'author', 'contents', 'parent_branch',)
 
@@ -313,7 +460,10 @@ def write_branch(request, book_info, parent_branch, cur_branch):
             # 임시저장 상태에서 또 임시 저장 상태로 바뀐다면 수정해야함.
             # 임시저장 상태에서 그냥 저장 상태로 바뀐다면 고치고 저장해야 함.
             if cur_branch == '0':
-                branch = branch_form.save()
+                branch = branch_form.save(commit=False)
+                if request.user != branch.author:
+                    raise Http404
+                branch.save()
             else:
                 try:
                     branch = Branch.objects.get(id=cur_branch)
@@ -325,6 +475,9 @@ def write_branch(request, book_info, parent_branch, cur_branch):
                 if is_temporary: pass
                 else: branch.is_temporary = False
                 
+                if request.user != branch.author:
+                    raise Http404
+
                 branch.save()
             # 임시저장 상태이고, 부모 노드가 없다면 책 상태의 루트노드를 저장하지 않는다.
             if is_temporary and parent_branch == '0':
@@ -361,7 +514,7 @@ def write_branch(request, book_info, parent_branch, cur_branch):
                                  'cur_branch': cur_branch,} ))
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def read_branch(request, branch_id):
     if request.method == "GET":
         try:       
@@ -376,12 +529,12 @@ def read_branch(request, branch_id):
     return HttpResponseRedirect('/')
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def comment_branch(request, branch_id):
     pass
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def like_branch(request, branch_id, like):
     try:
         branch = Branch.objects.get(id=branch_id)
@@ -429,7 +582,7 @@ def like_branch(request, branch_id, like):
 
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def save_bookmark(request, branch_id):
     try:
         branch = Branch.objects.get(id=branch_id)

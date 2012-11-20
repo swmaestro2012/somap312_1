@@ -7,8 +7,9 @@ urlpatterns = patterns('posts.views',
     url(r'^show_newlist/$', 'show_newlist'),
     url(r'^get_bookinfo/(?P<book_id>\d+)/$', 'get_bookinfo'),
     url(r'(?P<author_id>\d+)/books/$', 'get_author_books'),
-
+    url(r'^search_book/$', 'search_book'),
     url(r'^show_bookcomment/(?P<book_id>\d+)/$', 'show_bookcomment'),
+    url(r'^show_mybookcomment/$', 'show_mybookcomment'),
 
     # Branches
     url(r'^get_branchinfo/(?P<branch_id>\d+)/$', 'get_branchinfo'),
@@ -19,6 +20,7 @@ urlpatterns = patterns('posts.views',
 	url(r'^working_branch/$', 'working_branch'),
     url(r'(?P<author_id>\d+)/branches/$', 'get_author_branches'),
     url(r'^show_branchcomment/(?P<branch_id>\d+)/$', 'show_branchcomment'),
+    url(r'^show_mybranchcomment/$', 'show_mybranchcomment'),
 
     # TODO: Something Added for branch postiont
     url(r'^save_bookmark/(?P<branch_id>\d+)/$', 'save_bookmark'),

@@ -1,0 +1,5 @@
+<form id="auth-form" method="POST"> {% csrf_token %}
+	<p>{{ form.username }}</p>
+	</p>{{ form.password }}</p>
+	<input type="submit" value="확인" />
+</form>

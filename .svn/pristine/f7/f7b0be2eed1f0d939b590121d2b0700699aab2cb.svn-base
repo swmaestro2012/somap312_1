@@ -1,0 +1,61 @@
+<!-- 작성한 가지 -->
+{% if type == 1 %}
+	{% for branch in branch_list %}
+			<li class="branch-list-item">
+				<a href = "/posts/read_branch/{{ branch.id }}">	
+					<img src="{{ branch.book.get_coverimg }}" class="cover-img"></a>
+					<div class="branch-info">
+						<a href="/posts/read_branch/{{ branch.id }}" class="branch-title">{{ branch.title }}</a>
+						<a href="/posts/get_bookinfo/{{ branch.book.id }}">책 {{ branch.book.title }} by {{ branch.book.creator.get_nickname }}</a>
+						<a href="#">좋아요 ({{branch.like_count}})</a>
+						<a href="#">댓글 ({{branch.comment_count}})</a>
+					</div>
+				</a>
+			</li>
+	{% endfor %}
+
+<!-- 작성 중인 가지 -->
+{% elif type == 2 %}
+	{% for branch in branch_list %}
+		<li class="branch-list-item">
+			{% if branch.parent_branch %}
+				<a href = "/posts/write_branch/{{ branch.book.id }}/{{ branch.parent_branch.id }}/{{ branch.id }}/">
+			{% else %}
+				<a href = "/posts/write_branch/{{ branch.book.id }}/0/{{ branch.id }}/">
+			{% endif %}
+				<img src="{{ branch.book.get_coverimg }}" class="cover-img">
+				<div class="branch-info">
+					<a href="/posts/write_branch/{{ branch.book.id }}/{{ branch.parent_branch.id }}/{{ branch.id }}" class="branch-title">{{ branch.title }}</a>
+					<div>
+						<a href="/posts/get_bookinfo/{{ branch.book.id }}"
+							class="info info-icon info-book-icon" style="float:left">{{ branch.book.title }}</a>
+						<span style="float:left">&nbsp;&nbsp;by&nbsp;&nbsp;</span>
+						<a href="/accounts/userinfo/{{branch.book.creator.id}}" class="info info-user">{{ branch.book.creator.get_nickname }}</a>
+						<span class="info-timestamp">{{ branch.time_created }}</span>
+						<div style="clear:both;"></div>
+					</div>
+				</div>
+			</a>
+		</li>
+	{% endfor %}
+
+<!-- 북마크 -->
+{% elif type == 3 %}
+	{% for bookmark in bookmark_list %}
+	<li class="branch-list-item">
+		<a href = "/posts/read_branch/{{ bookmark.branch.id }}">	
+			<img src="{{ bookmark.branch.book.get_coverimg }}" class="cover-img"></a>
+			<div class="branch-info">
+				<a href="/posts/read_branch/{{ bookmark.branch.id }}" class="branch-title">{{ bookmark.branch.title }}</a>
+				<a href="/posts/get_bookinfo/{{ bookmark.branch.book.id }}">책 {{ bookmark.branch.book.title }} by {{ bookmark.branch.book.creator.get_nickname }}</a>
+				<a href="#">좋아요 ({{bookmark.branch.like_count}})</a>
+				<a href="#">댓글 ({{bookmark.branch.comment_count}})</a>
+			</div>
+				
+		</a>
+	</li>
+	{% endfor %}
+{% endif %}
+<input type="hidden" id="branch_page" value="{{ page }}" />
+<input type="hidden" id="is_lastpage" value="{{ is_lastpage }}" />
+<input type="hidden" id="branch_type" value="{{ type }}" />

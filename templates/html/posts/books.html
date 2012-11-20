@@ -6,7 +6,7 @@
 				<a href="/posts/get_bookinfo/{{ book.id }}" class="book-item-title">{{ book.title }}</a>
 				<a href="#" class="book-item-genre">{{ book.get_genre_display }}</a>
 				유저 레벨 : {{ book.creator.get_profile.points }} <a href="#" class="book-item-nickname">{{ book.creator.get_nickname }}</a>
-				좋아요 개수 : {{ book.like_count }}
+				<p class="info info-like">{{ book.like_count }}</p>
 			</div>	
 	</li>
 {% endfor %}

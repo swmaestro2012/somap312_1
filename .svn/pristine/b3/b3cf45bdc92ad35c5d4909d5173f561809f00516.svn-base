@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% block custom_header %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/posts/booklist.css" />
+	<style type="text/css">	
+		/* white */
+		.search-box {
+			margin : 0;
+			padding : 5px 5px 10px 5px;
+			text-align : center;
+		}
+
+		.search-box form {
+			display : inline-block;
+			border-radius:15px;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+		}
+
+		.query-wrapper {
+			display: inline-block;
+			margin:0;
+			padding : 2px 3px 3px 15px;
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+			border : 2px solid #E1B969;
+			background-color:white;
+		}
+		input {
+			height:32px;
+			width:250px;
+			padding: 0 5px 0 5px;
+			font-size: 20px;
+			border: 0;
+			color : black;
+		}
+
+		input:focus{
+			border:0;
+			outline: 0;
+		}
+
+		.search-box button {
+			position: relative;
+			margin :0;
+			font-size: 20px;
+			height:40px;
+			width:50px;
+			background-image : url({{ STATIC_URL }}images/icons/search.png);
+			background-repeat : no-repeat;
+			background-position:40% 50%;
+			border-top-right-radius: 15px;
+			border-bottom-right-radius: 15px;
+			background-color: #E1B969;
+		}
+
+		.genre-list {
+			list-style : none;
+			padding:0;
+			display: block;
+			margin: 10px 5% 10px 5%;
+			text-align: center;
+		}
+
+		.genre-list li {
+			border : 1px solid #986500;
+			background-color : white;
+			width: 47%;
+			padding: 6px 0 6px 0;
+			text-align : center;
+			box-shadow : 2px 2px 6px rgba(176, 164, 140, 0.6);
+			border-radius : 6px;
+			margin : 0 4% 10px 0;
+			font-weight : bolder;
+			display:inline;
+			float : left;
+		}
+
+		.genre-list li:nth-child(even) {
+			margin-right : 0;
+		}
+
+		.genre-list a {
+			color : black;
+			font-size : 20px;
+		}
+
+		#genre-toggle {
+			display:none;
+			background-color : #dfdfdf;
+			width:100%;
+			border-top : 1px solid #cacaca;
+			border-bottom : 1px solid #cacaca;
+			text-align : center;
+			color : #777;
+			font-weight:bolder;
+			font-size : 20px;
+			padding : 8px 0 8px 0;
+			text-shadow : 1px 1px 3px rgba(0,0,0,.3);
+			cursor : pointer;
+		}
+
+		.clear {
+			clear:both;
+		}
+	</style>
+{% endblock %}
+{% block page_title %}검색{% endblock %}
+{% block content %}
+	<div class="search-box">
+		<form id="search-form" action="" method="GET">
+			<div class="query-wrapper">
+				<input type="hidden" name="genre">
+				<input type="text" name="query">
+			</div><button type="submit">&nbsp;</button>
+		</form>
+	</div>
+
+	<ul class="genre-list">
+		<li>
+        	<a href=".?genre=1&query=">게임</a>
+		</li>
+		<li>
+		    <a href=".?genre=5&query=">공포</a>
+		</li>
+		<li>
+	        <a href=".?genre=10&query=">로맨스</a>
+		</li>
+		<li>
+	        <a href=".?genre=15&query=">무협</a>
+		</li>
+		<li>
+	        <a href=".?genre=20&query=">소설</a>
+		</li>
+		<li>
+	        <a href=".?genre=25&query=">수필</a>
+		</li>
+		<li>
+	        <a href=".?genre=30&query=">시</a>
+		</li>
+		<li>
+	        <a href=".?genre=35&query=">시나리오/희곡</a>
+		</li>
+		<li>
+	        <a href=".?genre=40&query=">아동</a>
+		</li>
+		<li>
+	        <a href=".?genre=45&query=">역사</a>
+		</li>
+		<li>
+	        <a href=".?genre=50&query=">전쟁</a>
+		</li>
+		<li>
+	        <a href=".?genre=55&query=">추리</a>
+		</li>
+		<li>
+	        <a href=".?genre=60&query=">판타지</a>
+		</li>
+		<li>
+	        <a href=".?genre=65&query=">패러디</a>
+		</li>
+		<li>
+	        <a href=".?genre=70&query=">팬픽</a>
+		</li>
+		<li>
+	        <a href=".?genre=75&query=">평론</a>
+		</li>
+		<li>
+	        <a href=".?genre=80&query=">퓨전</a>
+		</li>
+		<li>
+	        <a href=".?genre=85&query=">BL</a>
+		</li>
+		<li>
+	        <a href=".?genre=90&query=">Lt Novel</a>
+		</li>
+		<li>
+	        <a href=".?genre=95&query=">SF</a>
+		</li>
+	</ul>
+
+	<div class="clear"></div>
+	<a id="genre-toggle">장르 보이기/감추기</a>
+
+	<ul class="book-list">
+		<div id="book-list-wrapper">
+			{% include "posts/books.html" %}
+		</div>
+	</ul>
+{% endblock %}
+//<script>
+{% block jquery_code %}
+	var qs = decodeURIComponent(location.search).substring(1).split("&");
+	if(qs[0] != "genre=" || qs[1].split("=")[1] != ""){
+		var genre = qs[0].replace("genre=", "")
+		$("input[name='genre']").val(genre);
+		$(".genre-list").hide();
+		$("#genre-toggle").css('display','block');
+	}
+
+	$("#genre-toggle").bind('click', function(){
+		$(".genre-list").slideToggle();
+	});
+
+	// 검색해서 들어온 경우 query 채우기
+	$("input[name='query']").val(qs[1].split("=")[1]);
+
+	// 링크 이벤트 설정
+	$(".genre-list a").click(function(evt){
+		evt.preventDefault();
+
+		var addr = $(this).attr("href") + $("input[name='query']").val();
+		location.href = addr;
+	});
+	
+	$("#search-form").submit(function(evt){
+
+	});
+	
+{% endblock %}

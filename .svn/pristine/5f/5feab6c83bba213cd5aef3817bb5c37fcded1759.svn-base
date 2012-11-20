@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block custom_header %}
+
+{% endblock %}
+
+{% block content %}
+<a href = "/accounts/set_password/">비밀번호 변경</a>
+<a id="dropout" href = "#">탈퇴</a>
+
+{% endblock %}
+{% block jquery_code %}
+//<script>
+$("#dropout").click( function() {
+	if(confirm("정말로 탈퇴 하시겠습니까?")) {
+		location.href = "/accounts/dropout/"
+		return;
+	}
+	location.href = "/"
+	return;
+})
+//</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/posts/booklist.css"/>
+{% endblock %}
+{% block content %}
+
+{% if type == 1 %}
+<header>붙인 가지</header>
+	<ul class="branch-list">
+		<div id="branch-list-wrapper">
+			{% include "posts/branches.html" %}
+		</div>
+	</ul>
+{% elif type == 2 %}
+<header>작성 중인 가지</header>
+	<ul class="branch-list">
+		<div id="branch-list-wrapper">
+			{% include "posts/branches.html" %}
+		</div>
+	</ul>
+{% elif type == 3 %}
+<header>북마크</header>
+	<ul class="branch-list">
+		<div id="branch-list-wrapper">
+			{% include "posts/branches.html" %}
+		</div>
+	</ul>
+{% endif %}
+
+<a id="a_more_view">더 보기</a>
+{% endblock %}
+
+
+{% block jquery_code %}
+</script><script>
+$("#a_more_view").click(function() {
+	const MY_BRANCHED_TYPE = 1
+	const MY_BRANCHING_TYPE = 2
+	const MY_BOOKMARK_TYPE = 3
+
+	var branch_page = $("#branch_page").val()
+	var is_lastpage = $("#is_lastpage").val()
+	var branch_type = $("#branch_type").val()
+	
+	if(is_lastpage == "True") {
+		$("#a_more_view").remove()
+		return;
+	}
+	
+	$("#branch_page").remove()
+	$("#is_lastpage").remove()
+	$("#branch_type").remove()
+
+	if(branch_type == MY_BRANCHED_TYPE) {
+		$.get("/posts/{{ user.id }}/branches/?page=" + branch_page, function(data) {
+			$('#branch-list-wrapper').append(data)
+		})
+	} else if(book_type == MY_BRANCHING_TYPE) {
+		$.get("/posts/working_branch/?page=" + book_page, function(data) {
+			$('#branch-list-wrapper').append(data)
+		})
+	} else if(book_type == MY_BOOKMARK_TYPE) {
+		$.get("/posts/show_bookmarks/?page=" + book_page, function(data) {
+			$('#branch-list-wrapper').append(data)
+		})
+	}
+
+	return false;
+})
+</script><script>
+{% endblock %}

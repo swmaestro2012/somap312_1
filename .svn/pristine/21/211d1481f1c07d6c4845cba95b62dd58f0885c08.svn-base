@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}img/splash/splash-icon.png"> 
+<link rel="apple-touch-startup-image" href="{{ STATIC_URL }}img/splash/splash-screen.png" media="screen and (max-device-width: 320px)" /> 
+<link rel="apple-touch-startup-image" href="{{ STATIC_URL }}img/splash/splash-screen@2x.png" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" /> 
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-itunes-app" content="app-id=284882215, app-argument=x-sfp:///visit/seal-rocks">
+
+<title>여러가지 :: 참여형 소설 창작 서비스</title>
+
+<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/buttons.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/photoswipe.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/retina.css" media="only screen and (-webkit-min-device-pixel-ratio: 2)" rel="stylesheet" />
+<link href="{{ STATIC_URL }}css/add2home.css" rel="stylesheet" type="text/css">
+
+
+<script src="{{ STATIC_URL }}js/klass.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.js"></script>
+<script src="{{ STATIC_URL }}js/touchSwipe.js"></script>
+<script src="{{ STATIC_URL }}js/photoswipe.js"></script>
+<script src="{{ STATIC_URL }}js/roundabout.js"></script>
+<script src="{{ STATIC_URL }}js/contact.js"></script>
+<script src="{{ STATIC_URL }}js/retina.js"></script>
+<script src="{{ STATIC_URL }}js/add2home.js"></script>
+<script src="{{ STATIC_URL }}js/custom.js"></script>
+
+{% block custom_header %}{% endblock %}
+</head>
+
+<body onload="touchScroll('scrollMe')">
+
+<div class="content">
+    {% if user.is_authenticated %}
+	<div class="header">
+    	<a href="#" class="deploy-nav header-icon"></a>
+        <a href="#" class="hide-nav header-icon-active"></a>
+        <ul class="direct-link-list">
+        	<!-- <li><a href="#">메뉴</a></li> -->
+        	{% block direct_link %}{% endblock %}
+        </ul>
+    </div>
+
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+</div>
+
+{% if user.is_authenticated %}
+
+<!-- LEFT BAR -->
+<div class="sidebar">
+	<div class="sidebar-hide-scroll" id="scrollMe">
+	<div class="sidebar-header">
+		<a href = "/"><h1 class="sidebar-title">여러가지</h1></a>
+    </div>
+
+    <div class="menu-item profile">
+    	<div class="userinfo">
+	    	<img src="{{ user.get_profile.get_profileimg }}" id="profileImage">
+	    	<div id="nickname"><a href="/accounts/userinfo/{{ user.id }}">{{ user.get_nickname }}</a></div>
+    	</div>
+    </div>
+
+    <p class="sidebar-divider">
+    	여러가지
+    </p>
+    <a class="menu-item varbr-icon varbr-laurel-icon" href="/posts/recommend_list/">명예의 전당<em></em></a>
+    <a class="menu-item varbr-icon varbr-new-icon" href="/posts/show_newlist/">최신작<em></em></a>
+    <a class="menu-item varbr-icon varbr-find-icon last-menu-item" href="/posts/search_book/?genre=&query=">검색<em></em></a>
+
+    <p class="sidebar-divider">
+    	서재
+    </p>
+    <a class="menu-item menu-icon facebook" href="/posts/show_bookmarks/">책 갈피<em></em></a>
+    <a class="menu-item varbr-icon last-menu-item varbr-book-icon" href="/posts/{{ user.id }}/books/">심은 책<em></em></a>
+    <a class="menu-item varbr-icon alert3" href="/posts/{{ user.id }}/branches/">붙인 가지<em></em></a>
+    <a class="menu-item varbr-icon varbr-comment-icon" href="#">댓글 한 잎<em></em></a>
+    <a class="menu-item varbr-icon varbr-write-icon" href="/posts/create_book/">책 심기<em></em></a>
+    <a class="menu-item menu-icon alert3 last-menu-item" href="/posts/working_branch/">작성중인 가지<em></em></a>
+    <p class="sidebar-divider">
+
+    </p>
+    <a class="menu-item menu-icon phone last-menu-item" href="/accounts/show_favauthor/">관심작가<em></em></a>
+    <p class="sidebar-divider">
+
+    </p>
+    <a class="menu-item menu-icon speach" href="#">계정설정<em></em></a>
+    <a class="menu-item menu-icon last-menu-item mail" id="sub-menu-one" href="mailto:mail@domain.com">고객센터<strong></strong></a>
+        <div class="sub-menu-one">
+            <a href="fullfolio.html" class="sub-menu-item">건의사항</a>
+            <a href="thumbgall.html" class="sub-menu-item">문의사항</a>
+        </div>
+    <a class="menu-item varbr-icon last-menu-item varbr-logout-icon" href="/accounts/logout/">LOG OUT</a>
+    </div>
+</div>
+
+
+<!-- RIGHT BAR -->
+<div class="menubar">
+    <div class="menubar-hide-scroll">
+        <!--
+        <div class="menubar-header">
+            <a href="#"><h1 class="sidebar-title">현재 페이지명</h1></a>
+        </div>
+        -->
+        <!-- <p class="sidebar-divider no-top">
+            현재 페이지명
+        </p> -->
+        {% block right_bar %}{% endblock %}
+
+        <!--
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 1<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 2<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 3<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 4<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 5<em></em></a>
+        -->
+    </div>
+</div>
+{% endif %}
+
+<script language="javascript">
+var User = new function(){
+	this.id = {{user.id}};
+	this.nickname = "{{user.nickname}}";
+	this.profileimg = "{{user.get_profile.get_profileimg }}";
+}
+{% block jquery_code %}{% endblock %}
+</script>
+</body>
+</html>
+
