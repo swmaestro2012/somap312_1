@@ -8,7 +8,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import json
 
 ############# BOOKS
 INDEX_PAGE_BOOKS = 5
@@ -341,7 +340,6 @@ def get_bookinfo(request, book_id):
                 "pid": branch.parent_branch.id,
                 "uid": branch.author.id,
                 "point": branch.like_count,
-                "uimage": branch.author.get_profile().get_profileimg()
             })
         except AttributeError: # If There have no parent branch
             tree_data.append({
@@ -349,9 +347,8 @@ def get_bookinfo(request, book_id):
                 "pid": 0,
                 "uid": branch.author.id,
                 "point": branch.like_count,
-                "uimage": branch.author.get_profile().get_profileimg()
             })
-    tree_data = json.dumps(tree_data)
+
     bookcomments = BookComment.objects.filter(book=book_id)
     
     bookcomment_form = BookCommentForm({'book': book_info,

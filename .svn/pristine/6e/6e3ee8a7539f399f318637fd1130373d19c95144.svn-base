@@ -46,8 +46,8 @@
 {% block page_title %}{{ branch.title }}{% endblock %}
 
 {% block direct_link %}
-<li><a href="/posts/write_branch/{{ branch.book.id }}/{{ branch.id }}/0" class="direct-link-write"></a></li>
-<li><a href="/posts/save_bookmark/{{ branch.id }}" class="direct-link-bookmark"></a></li>
+<li><a class="direct-link-write"></a></li>
+<li><a class="direct-link-bookmark"></a></li>
 <li><a class="direct-link-like"></a></li>
 {% endblock %}
 
@@ -58,11 +58,9 @@
 <div id="branch-info-box">
 작가 - <a href="/accounts/userinfo/{{branch.author.id}}"
 	class="bi-author">{{ branch.author.nickname }}</a><br/>
-<a href="/posts/get_bookinfo/{{ branch.book.id }}" style="color:black">책으로 돌아가기</a>
-<br/>
 	이전 가지글 : 
 {% if branch.parent_branch %}
-<a style="color:black" href="/posts/read_branch/{{branch.parent_branch.id}}">{{branch.parent_branch.title}}</a><br/>
+<a style="color:black" href="/posts/read_branch/{{branch.parent_branch.id}}">이전 가지글({{branch.parent_branch.title}})</a><br/>
 {% else %}
 책의 첫 가지입니다<br/>
 {% endif %}
@@ -112,7 +110,7 @@ if($cp[0].scrollHeight == $cp[0].clientHeight){
 $cp.bind('scroll', function(evt){
 	// 스크롤 끝 확인
 	var currentScroll = this.scrollTop + this.clientHeight;
-	if(currentScroll == this.scrollHeight){	
+	if(currentScroll == this.scrollHeight){
 		$(".next-page").fadeIn("slow");
 	} else {
 		$(".next-page").hide();
@@ -120,31 +118,13 @@ $cp.bind('scroll', function(evt){
 });
 
 var next_branch_id = 0;
-var branch_score;
+
 // 다음 브랜치 찾기
 {% if next_branches %}
-branch_score = [
+var branch_score = [
 {% for next_branch in next_branches %}
-{ id : {{ next_branch.id }},
-  score : {{ next_branch.like_count }},
-},
+{{ next_branch.like_count }},
 {% endfor %}
-];
 {% endif %}
-
-if(branch_score != undefined){
-	var score = -1;
-	for(var i=0; i < branch_score.length ; i++){
-		if(score < branch_score[i].score){
-			next_branch_id = branch_score[i].id;
-			score = branch_score[i].score;
-		}
-	}
-}
-
-if(next_branch_id == 0){
-	$(".next-page").remove();
-} else {
-	$(".next-page").attr('href', '/posts/read_branch/' + next_branch_id);
-}
+];
 {% endblock %}

@@ -8,7 +8,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import json
 
 ############# BOOKS
 INDEX_PAGE_BOOKS = 5
@@ -117,9 +116,9 @@ def search_book(request):
         return render_to_response('posts/search_book.html', RequestContext(request))
 
     if query and genre:
-        book_list = Book.objects.filter(title__contains=query, genre=genre).order_by("-id")
+        book_list = Book.objects.filter(title=query, genre=genre).order_by("-id")
     elif query:
-        book_list = Book.objects.filter(title__contains=query).order_by("-id")
+        book_list = Book.objects.filter(title=query).order_by("-id")
     elif genre:
         book_list = Book.objects.filter(genre=genre).order_by("-id")
 
@@ -341,7 +340,6 @@ def get_bookinfo(request, book_id):
                 "pid": branch.parent_branch.id,
                 "uid": branch.author.id,
                 "point": branch.like_count,
-                "uimage": branch.author.get_profile().get_profileimg()
             })
         except AttributeError: # If There have no parent branch
             tree_data.append({
@@ -349,9 +347,8 @@ def get_bookinfo(request, book_id):
                 "pid": 0,
                 "uid": branch.author.id,
                 "point": branch.like_count,
-                "uimage": branch.author.get_profile().get_profileimg()
             })
-    tree_data = json.dumps(tree_data)
+
     bookcomments = BookComment.objects.filter(book=book_id)
     
     bookcomment_form = BookCommentForm({'book': book_info,
@@ -522,13 +519,11 @@ def read_branch(request, branch_id):
     if request.method == "GET":
         try:       
             branch = Branch.objects.get(pk=branch_id)
-            next_branches = Branch.objects.filter(parent_branch=branch_id)
         except Branch.DoesNotExist:
             raise Http404
         
         return render_to_response('posts/read_branch.html', \
             RequestContext(request, {'branch': branch,
-                                    'next_branches' : next_branches,
                                      }))
 
     return HttpResponseRedirect('/')

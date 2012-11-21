@@ -57,16 +57,13 @@
 <div class="sidebar">
 	<div class="sidebar-hide-scroll" id="scrollMe">
 	<div class="sidebar-header">
-		<a href = "/"><img style="margin-left:15px" src="{{ STATIC_URL }}images/logo/logo-lightbrown.png" height="42"></a>
+		<a href = "/"><h1 class="sidebar-title">여러가지</h1></a>
     </div>
 
     <div class="menu-item profile">
     	<div class="userinfo">
 	    	<img src="{{ user.get_profile.get_profileimg }}" id="profileImage">
-	    	<div id="nickname">
-                <a href="/accounts/userinfo/{{ user.id }}">{{ user.get_nickname }}</a>
-                <img src="{{ STATIC_URL }}images/level/fountain1.png" id="level-icon" height="20px">
-            </div>
+	    	<div id="nickname"><a href="/accounts/userinfo/{{ user.id }}">{{ user.get_nickname }}</a></div>
     	</div>
     </div>
 
@@ -89,6 +86,29 @@
     </div>
 </div>
 
+
+<!-- RIGHT BAR -->
+<div class="menubar">
+    <div class="menubar-hide-scroll">
+        <!--
+        <div class="menubar-header">
+            <a href="#"><h1 class="sidebar-title">현재 페이지명</h1></a>
+        </div>
+        -->
+        <!-- <p class="sidebar-divider no-top">
+            현재 페이지명
+        </p> -->
+        {% block right_bar %}{% endblock %}
+
+        <!--
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 1<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 2<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 3<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 4<em></em></a>
+        <a class="menu-item menu-icon facebook" href="#">Menu Item 5<em></em></a>
+        -->
+    </div>
+</div>
 {% endif %}
 
 <script language="javascript">
@@ -96,41 +116,7 @@ var User = new function(){
 	this.id = {{user.id}};
 	this.nickname = "{{user.nickname}}";
 	this.profileimg = "{{user.get_profile.get_profileimg }}";
-    this.points = {{ user.get_profile.points }};
 }
-
-/* 레벨 아이콘 설정 */
-const LEVEL_IMG_PATH = "{{STATIC_URL}}images/level/";
-const LEVEL_IMAGES = [
-"p1@2x.png",
-"p2@2x.png",
-"p3@2x.png",
-"pen1.png",
-"pen2.png",
-"pen3.png",
-"brush1.png",
-"brush2.png",
-"brush3.png",
-"quill1.png",
-"quill2.png",
-"quill3.png",
-"fountain1.png",
-"fountain2.png",
-"fountain3.png",
-];
-
-(function initLevelIcon(){
-    var level = parseInt(User.points / 100);
-
-    $("#level-icon").attr('src', (function() {
-        return LEVEL_IMAGES.length > level ? 
-            LEVEL_IMG_PATH + LEVEL_IMAGES[level] :
-            LEVEL_IMG_PATH + LEVEL_IMAGES[LEVEL_IMAGES.length-1];
-
-    })());
-})();
-
-
 {% block jquery_code %}{% endblock %}
 </script>
 </body>

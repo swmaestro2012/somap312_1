@@ -120,7 +120,7 @@ const LEVEL_IMAGES = [
 ];
 
 (function initLevelIcon(){
-    var level = parseInt(User.points / 100);
+    var level = User.points / 100 + 1;
 
     $("#level-icon").attr('src', (function() {
         return LEVEL_IMAGES.length > level ? 
